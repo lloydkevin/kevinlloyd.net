@@ -3,11 +3,17 @@
 
 .hero-body {
     background-image: url(/iphone-notebook-pen-working-dark.jpg);
-    background-size:cover;
+    background-size: cover;
 
-    .title, .subtitle {
+    .title,
+    .subtitle {
+        text-shadow: 6px 6px 10px lighten($color: black, $amount: 10);
+    }
+
+    .title {
         color: white;
     }
+
     .subtitle {
         color: darken($color: white, $amount: 15)
     }
