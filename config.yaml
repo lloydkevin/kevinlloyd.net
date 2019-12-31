@@ -1,8 +1,8 @@
-baseURL: http://something-fresh.org/
+baseURL: /
 languageCode: en-us
-title: Hugo Fresh Theme
+title: Kevin Lloyd - Freelance Web Designer in Dallas/Addison Texas
 theme: hugo-fresh
-googleAnalytics: # Put in your tracking code without quotes like this: UA-XXXXXX...
+googleAnalytics: UA-100181-12
 # Disables warnings
 disableKinds:
 - taxonomy
@@ -19,48 +19,52 @@ params:
   description:
   navbarlogo:
   # Logo (from static/images/logos/___)
-    image: logos/fresh.svg
-    link: /
+    # image: logos/fresh.svg
+    # link: /
   font:
     name: "Open Sans"
     sizes: [400,600]
   hero:
     # Main hero title
-    title: Manage. Deploy.
+    title: Kevin Lloyd
     # Hero subtitle (optional)
-    subtitle: Lorem ipsum sit dolor amet is dummy text used by the typography industry
+    subtitle: Freelance Web Designer/Developer in Dallas/Addison Texas.
     # Button text
-    buttontext: Get started
+    buttontext: Contact Me
     # Where the main hero button links to
-    buttonlink: "#"
+    buttonlink: "#contact"
     # Hero image (from static/images/___)
     image: illustrations/worker.svg
     # Footer logos (from static/images/logos/clients/___.svg)
-    clientlogos:
-    - systek
-    - tribe
-    - kromo
-    - infinite
-    - gutwork
+    # clientlogos:
+    # - systek
+    # - tribe
+    # - kromo
+    # - infinite
+    # - gutwork
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
-  - title: Features
+  - title: Home
     url: /
-  - title: Pricing
-    url: /
-  - title: Dropdown
-    sublinks:
-    - title: Dropdown item
-      url: /
-    - title: Dropdown item
-      url: /
-    - title: Dropdown item
-      url: /
-  - title: Log in
-    url: /
-  - title: Sign up
-    url: /
+  - title: Recent Work
+    url: "#recent"
+  # - title: Dropdown
+  #   sublinks:
+  #   - title: Dropdown item
+  #     url: /
+  #   - title: Dropdown item
+  #     url: /
+  #   - title: Dropdown item
+  #     url: /
+  - title: About Me
+    url: "/#about"
+  - title: Testimonials
+    url: "/#testimonials"
+  - title: Contact Me
+    url: "/#contact"
     button: true
+
+
   section1:
     title: Great power comes
     subtitle: with great responsibility
@@ -124,6 +128,9 @@ params:
     socialmediatitle: Follow Us
     # Social media links (GitHub, Twitter, etc.). All are optional.
     socialmedia:
+    - link: https://twitter.com/kevinlloyd749
+      icon: twitter
+
     - link: https://github.com/lucperkins/github-fresh
       # Icons are from Font Awesome
       icon: github
@@ -135,7 +142,7 @@ params:
       icon: twitter
     - link: https://bitbucket.org/#
       icon: bitbucket
-    bulmalogo: true
+    bulmalogo: false
     quicklinks:
       column1:
         title: "Product"
