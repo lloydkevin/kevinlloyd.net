@@ -1,0 +1,14 @@
+@import "bulma/bulma.sass";
+@import "fresh/core";
+
+.hero-body {
+    background-image: url(/iphone-notebook-pen-working-dark.jpg);
+    background-size:cover;
+
+    .title, .subtitle {
+        color: white;
+    }
+    .subtitle {
+        color: darken($color: white, $amount: 15)
+    }
+}
