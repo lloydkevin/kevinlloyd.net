@@ -64,6 +64,32 @@ params:
     url: "/#contact"
     button: true
 
+  about:
+    title: About Me
+    subtitle:
+    tiles:
+      - title: Who Am I
+        text: >
+          I'm Kevin Lloyd, from North Texas (Dallas, Addison, Frisco).
+          I'm a full time Senior Software Architect in the Dallas area and part time Web Development enthusiast.
+          I specialize in creating a web experience for small and sole proprietor businesses.
+          Using a variety of tools from WordPress theme development to Custom Application Development.
+      - title: What I Do
+        text: >
+          My days involve building websites for work with the Microsoft stack (ASP.NET Core, C#, etc).
+          My nights and weekends are filled with my passion for Web Development and Microsoft Azure Cloud Technology.
+    skills:
+      title: "I currently focus on the following technologies:"
+      sets:
+        - Web Application Design
+        - ASP.NET Core
+        - Django
+        - Vue.js
+        - Web Design
+        - Web Presence
+        - WordPress Theme Customization
+        - Landing Pages
+
 
   section1:
     title: Great power comes

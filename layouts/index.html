@@ -3,6 +3,12 @@
     {{ partial "hero.html" . }}
     {{ end }}
 
+    {{ partial "recent.html" . }}
+    {{ partial "about.html" . }}
+    {{ partial "testimonials.html" . }}
+    {{ partial "contact.html" . }}
+
+
     {{ if .Site.Params.section1 }}
     {{ partial "section1.html" . }}
     {{ end }}
