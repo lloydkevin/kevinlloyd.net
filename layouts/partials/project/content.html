@@ -1,0 +1,31 @@
+{{- $image := index (.Resources.Match .Params.img) 0 -}}
+{{- $small := $image.Resize "600x" }}
+
+{{- $image.RelPermalink -}}
+
+{{ with .Resources.ByType "image" }}
+	<div class="Image">
+	{{ range . }}
+		<img src="{{ .RelPermalink }}">
+	{{ end }}
+	</div>
+{{ end }}
+
+
+<section class="section is-medium">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-centered-tablet-portrait">
+          <h1 class="title section-title">{{ .Title }}</h1>
+          {{ with .Params.Subtitle }}<h5 class="subtitle is-5 is-muted">{{ . }}</h5>{{end}}
+          <div class="divider"></div>
+        </div>
+      </div>
+      {{$small.RelPermalink}}
+      <figure class="image">
+        {{/*  <img src="{{$image.RelPermalink}}" alt="Description">  */}}
+      </figure>
+
+      {{ .Content }}
+    </div>
+  </section>
