@@ -1,7 +1,7 @@
-{{- $section4 := .Site.Params.section4 }}
-{{- $title    := index $section4 "title" }}
-{{- $subtitle := index $section4 "subtitle" }}
-{{- $clients  := index $section4 "clients" }}
+{{- $testimonials := .Site.Params.testimonials }}
+{{- $title    := index $testimonials "title" }}
+{{- $subtitle := index $testimonials "subtitle" }}
+{{- $clients  := index $testimonials "clients" }}
 <section class="section is-medium section-secondary">
   <div class="container">
 
@@ -15,15 +15,13 @@
     <div class="content-wrapper">
       <div class="columns is-vcentered">
         {{- range $clients }}
-        <div class="column is-4">
+        <div class="column">
           <figure class="testimonial">
             <blockquote>
-              {{ .quote }}
+              {{ .quote | markdownify }}
             </blockquote>
             <div class="author">
-              <img src="{{ printf "/images/illustrations/faces/%s.png" (string .img) | relURL }}" alt=""/>
               <h5>{{ .name }}</h5>
-              <span>{{ .job }}</span>
             </div>
           </figure>
         </div>
