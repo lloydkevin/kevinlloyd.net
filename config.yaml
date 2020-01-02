@@ -130,22 +130,33 @@ params:
     image: illustrations/mockups/app-mockup.png
     buttonText: Get started
     buttonLink: "#"
-  section4:
-    title: Our Clients love us!
-    subtitle: Lorem ipsum sit dolor amet is a dummy text used by typography industry
+
+  testimonials:
+    title: From My Clients!
+    subtitle:
     clients:
-    - name: Irma Walters
-      quote: Lorem ipsum dolor sit amet, elit deleniti dissentias quo eu, hinc minim appetere te usu, ea case duis scribentur has. Duo te consequat elaboraret, has quando suavitate at.
-      job: Accountant
-      img: 1
-    - name: John Bradley
-      quote: Lorem ipsum dolor sit amet, elit deleniti dissentias quo eu, hinc minim appetere te usu, ea case duis scribentur has. Duo te consequat elaboraret, has quando suavitate at.
-      job: Financial Analyst
-      img: 2
-    - name: Gary Blackman
-      quote: Lorem ipsum dolor sit amet, elit deleniti dissentias quo eu, hinc minim appetere te usu, ea case duis scribentur has. Duo te consequat elaboraret, has quando suavitate at.
-      job: HR Manager
-      img: 3
+    - name: How I Save Money
+      quote: >
+        Very professional and easy to work with. Kevin has refreshed my website over 4 times throughout the years.
+        His high standards and attention to detail and quality have left me an extremely happy customer.
+
+    - name: Sensibly Chic Weddings
+      quote: >
+        I'm very pleased with my website, and Kevin was such a pleasure to work with. He took the time to determine my wants and needs, and welcomed my personal design preferences. I needed a modern website to appeal to my target audience, and Kevin delivered it in only a few weeks.
+
+    - name: Covenant Advisors
+      quote-org: >
+        It was easy working with Kevin throughout the design and implementation process. I had my outline and page content ready when we began working together. He was able to review that and make some constructive suggestions to improve the overall site and layout. The tutorial he prepared on how to update the content really proves beneficial when it's been several months between updating articles or references.
+        <br /><br />
+        The site fits my needs. It's professional, yet not too sterile. I really didn't expect to get very many new clients via the website. As a financial advisor most of the prospects we see are based on word-of-mouth. However what regularly impresses me is that those who are interested in our services go to the website for information. Often in the first meeting they will comment on how much they liked the website. I had one client who found me through a referral site and then used our web site to make a final selection. That's what I was looking for in a reasonably priced web design, so it worked.
+        <br /><br />
+        There are several web design businesses that cater strictly to financial advisors. But I enjoy working with someone who is flexible and doesn't treat me like a small business. Overall I'm very pleased with the service we received and would work with Kevin again.
+
+      quote: >
+        There are several web design businesses that cater strictly to financial advisors.
+        But I enjoy working with someone who is flexible and doesn't treat me like a small business.
+        Overall I'm very pleased with the service we received and would work with Kevin again.
+
   section5: true
   footer:
     # Logo (from /images/logos/___)
