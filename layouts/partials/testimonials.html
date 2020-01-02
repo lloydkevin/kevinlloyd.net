@@ -2,7 +2,7 @@
 {{- $title    := index $testimonials "title" }}
 {{- $subtitle := index $testimonials "subtitle" }}
 {{- $clients  := index $testimonials "clients" }}
-<section class="section is-medium section-secondary">
+<section id="testimonials" class="section is-medium section-secondary">
   <div class="container">
 
     <div class="title-wrapper has-text-centered">
@@ -13,9 +13,9 @@
     </div>
 
     <div class="content-wrapper">
-      <div class="columns is-vcentered">
+      <div class="columns is-vcentered is-multiline">
         {{- range $clients }}
-        <div class="column">
+        <div class="column is-one-third">
           <figure class="testimonial">
             <blockquote>
               {{ .quote | markdownify }}
