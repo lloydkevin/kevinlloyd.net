@@ -1,9 +1,33 @@
-@import "bulma/bulma.sass";
 @import "fresh/core";
 
+$link: $secondary;
+$link-hover: lighten($link, 15);
+
+@import "bulma/bulma.sass";
+
+.overlay:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    // background: #2c1c19;
+    // background: darken($secondary, 35);
+    background: #333;
+    opacity: .8;
+}
+
+.hero .navbar {
+    background: white;
+}
+
 .hero-body {
-    background-image: url(/iphone-notebook-pen-working-dark.jpg);
+    background-image: url(/iphone-notebook-pen-working-34123.jpg);
     background-size: cover;
+    background-attachment: fixed;
 
     .title,
     .subtitle {
@@ -16,6 +40,19 @@
 
     .subtitle {
         color: darken($color: white, $amount: 15)
+    }
+}
+
+a {
+    transition: all 0.5s;
+}
+
+#recent {
+    .project img {
+        transition: all 0.5s;
+        &:hover {
+            opacity: 0.7;
+        }
     }
 }
 
