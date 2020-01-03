@@ -2,12 +2,12 @@
 {{- $title    := index $testimonials "title" }}
 {{- $subtitle := index $testimonials "subtitle" }}
 {{- $clients  := index $testimonials "clients" }}
-<section id="testimonials" class="section is-medium section-secondary">
+<section id="testimonials" class="section is-medium section-feature-grey">
   <div class="container">
     <div class="title-wrapper has-text-centered">
-      <h2 class="title is-2 light-text is-spaced">{{ $title }}</h2>
+      <h2 class="title is-2 is-spaced">{{ $title }}</h2>
       {{- with $subtitle }}
-      <h3 class="subtitle is-5 light-text">{{ . }}</h3>
+      <h3 class="subtitle is-5">{{ . }}</h3>
       {{- end }}
     </div>
 
