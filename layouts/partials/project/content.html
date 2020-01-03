@@ -1,4 +1,7 @@
-{{- $image := index (.Resources.Match .Params.img) 0 -}}
+{{- $image := index (.Resources.Match "feature.*") 0 -}}
+{{- if not $image }}
+{{$image = index (.Resources.ByType "image") 0}}
+{{end}}
 {{- $small := $image.Resize "600x" }}
 
 {{- $image.RelPermalink -}}

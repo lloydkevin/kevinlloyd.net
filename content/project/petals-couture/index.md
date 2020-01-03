@@ -2,7 +2,7 @@
 title: "Petals Couture"
 date: 2020-01-02T14:17:13-06:00
 link: http://covenantadvisorsplanning.com
-img: Covenant-Advisors-About-Us.jpg
+img: feature.jpg
 ---
 
 Custom Contact Management System (CMS) done use CakePHP 1.2.
