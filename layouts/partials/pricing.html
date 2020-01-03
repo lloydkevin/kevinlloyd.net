@@ -1,0 +1,35 @@
+{{- $pricing := .Site.Params.pricing }}
+{{- $title    := index $pricing "title" }}
+{{- $subtitle := index $pricing "subtitle" }}
+{{- $options  := index $pricing "options" }}
+<section id="pricing" class="section section-secondary is-medium">
+  <div class="container">
+    <div class="title-wrapper has-text-centered">
+      <h2 class="title is-2">{{ $title }}</h2>
+      {{ with $subtitle}}<h3 class="subtitle is-5 is-muted">{{ . }}</h3>{{ end }}
+      <div class="divider is-centered"></div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="columns is-centered">
+          {{ range $options }}
+          <div class="column is-one-third">
+              <div class="mt-5">
+                <div class="content">
+                    <h4>{{.title}}</h4>
+                    <p>{{ .price }}</p>
+                    <ul>
+                      {{ range .items }}
+                        <li>{{ . }}</li>
+                      {{ end }}
+                    </ul>
+                </div>
+              </div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+     </div>
+  </div>
+</section>
