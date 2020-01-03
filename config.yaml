@@ -147,53 +147,36 @@ params:
     # Logo (from /images/logos/___)
     logo: fresh-white-alt.svg
     # Social Media Title
-    socialmediatitle: Follow Us
+    socialmediatitle: Follow Me
     # Social media links (GitHub, Twitter, etc.). All are optional.
     socialmedia:
     - link: https://twitter.com/kevinlloyd749
       icon: twitter
 
-    - link: https://github.com/lucperkins/github-fresh
-      # Icons are from Font Awesome
-      icon: github
-    - link: https://dribbble.com/#
-      icon: dribbble
-    - link: https://facebook.com/#
-      icon: facebook
-    - link: https://twitter.com/lucperkins
-      icon: twitter
-    - link: https://bitbucket.org/#
-      icon: bitbucket
+    # - link: https://github.com/lucperkins/github-fresh
+    #   # Icons are from Font Awesome
+    #   icon: github
+    # - link: https://dribbble.com/#
+    #   icon: dribbble
+    # - link: https://facebook.com/#
+    #   icon: facebook
+    # - link: https://twitter.com/lucperkins
+    #   icon: twitter
+    # - link: https://bitbucket.org/#
+    #   icon: bitbucket
     bulmalogo: false
     quicklinks:
       column1:
-        title: "Product"
+        title: "Tools Used"
         links:
-        - text: Discover features
-          link: /
-        - text: Why choose our product?
-          link: /
-        - text: Compare features
-          link: /
-        - text: Our roadmap
-          link: /
-        - text: AGB
-          link: /agb
-      column2:
-        title: "Docs"
-        links:
-        - text: Get started
-          link: /
-        - text: User guides
-          link: /
-        - text: Admin guide
-          link: /
-        - text: Developers
-          link: /
+        - text: Hugo
+          link: https://gohugo.io/
+        - text: Sass
+          link: https://sass-lang.com/
       column3:
-        title: "Blog"
+        title: "Other Links"
         links:
-        - text: Latest news
-          link: /blog/first
+        - text: Web Development2.com
+          link: https://www.webdevelopment2.com/
         - text: Tech articles
           link: /blog/second
