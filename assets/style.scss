@@ -43,6 +43,23 @@ $link-hover: lighten($link, 15);
     }
 }
 
+.section-secondary {
+    h2.title {
+        color: $white;
+    }
+
+    .divider {
+        background: $primary;
+    }
+
+    a {
+        color: $white;
+        &:hover {
+            color: darken($white, 15)
+        }
+    }
+}
+
 a {
     transition: all 0.5s;
 }
