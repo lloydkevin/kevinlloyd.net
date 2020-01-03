@@ -142,7 +142,48 @@ params:
         But I enjoy working with someone who is flexible and doesn't treat me like a small business.
         Overall I'm very pleased with the service we received and would work with Kevin again.
 
+  pricing:
+    title: What You Get
+    subtitle:
+    options:
+      option1:
+        title: Landing Page
+        price: 350-500
+        items:
+        - $30/month maintenance *
+        - 5 Email Addresses
+        - Up to 6 Sections
+        - Contact Form
+        - About
+      option2:
+        title: Basic Site
+        price: 500-800
+        items:
+        - Everything in the "Landing Page" package.
+        - $50/month maintenance *
+        - Blog Page
+      option3:
+        title: Complex Website
+        price: 800-1500
+        items:
+        - Everything in the "Basic Site" package.
+        - $50/month maintenance *
+        - Photo Gallery
+        - Logo Design
+        - Online Sales (E-Commerce)
+
+
+    details:
+      title: Pricing Details
+      subtitle: "* Maintenance includes:"
+      list:
+        - Website hosting, domain, 5 email addresses
+        - Security updates
+        - Daily backups
+        - 2 hours of technical support (minor modifications, etc.)
+
   section5: true
+
   footer:
     # Logo (from /images/logos/___)
     logo: fresh-white-alt.svg
