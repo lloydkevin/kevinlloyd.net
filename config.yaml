@@ -152,6 +152,8 @@ params:
     socialmedia:
     - link: https://twitter.com/kevinlloyd749
       icon: twitter
+    - link: https://www.linkedin.com/in/kevinalanlloyd/
+      icon: linkedin
 
     # - link: https://github.com/lucperkins/github-fresh
     #   # Icons are from Font Awesome
