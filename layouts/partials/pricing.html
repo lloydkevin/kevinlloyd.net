@@ -11,11 +11,11 @@
     </div>
 
     <div class="content-wrapper">
-        <div class="columns">
+        <div class="columns is-desktop">
           {{ range $options }}
-          <div class="column is-one-third">
-              <div class="mt-5 pricing-table">
-                    <h4 class="pricing-title">{{.title}}</h4>
+          <div class="column">
+              <div class="mt-5 pricing-table {{- if (.recommended) }} recommended {{- end -}}">
+                    <h4 class="pricing-title">{{ .title }}</h4>
                     <div class="price">${{ .price }}</div>
                     <ul class="table-list">
                       {{ range .items }}
@@ -23,7 +23,8 @@
                       {{ end }}
                     </ul>
                     <div class="table-buy">
-                      <a href="#contact" class="pricing-action">Contact Me</a>
+                      <a href="#contact"
+                        class="button rounded cta is-large raised {{- if (.recommended) }} primary-btn {{- end -}}">Contact Me</a>
                     </div>
               </div>
           </div>
