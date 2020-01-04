@@ -156,6 +156,7 @@ params:
         - Contact Form
         - About
       option2:
+        recommended: true
         title: Basic Site
         price: 500-800
         items:
