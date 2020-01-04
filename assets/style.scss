@@ -90,8 +90,6 @@ a {
     }
 }
 
-
-
 /* Pricing Tables */
 // Tables from https://codepen.io/Creaticode/pen/pHEyJ
 #pricing {
@@ -106,6 +104,7 @@ a {
 
     .column {
         display: flex;
+        // Columns now have same height
     }
 
     .pricing-table-title {
@@ -113,9 +112,9 @@ a {
         font-weight: 700;
         font-size: 2.6em;
         color: #FFF;
-        margin-top: 15px;
-        text-align: left;
-        margin-bottom: 25px;
+        // margin-top: 15px;
+        // text-align: left;
+        // margin-bottom: 25px;
         text-shadow: 0 1px 1px rgba(0,0,0,0.4);
     }
 
@@ -130,6 +129,7 @@ a {
 
     .pricing-table {
         // margin: 0 10px;
+        position: relative;
         text-align: center;
         width: 100%;
         float: left;
@@ -138,6 +138,8 @@ a {
         -webkit-transition: all 0.25s ease;
         -o-transition: all 0.25s ease;
         transition: all 0.25s ease;
+        // height: 100%;
+        background-color: $white;
     }
 
     .pricing-table:hover {
@@ -181,6 +183,7 @@ a {
     .table-list {
         background: #FFF;
         color: #403d3a;
+        margin-bottom: 4em;
     }
 
     .table-list li {
@@ -192,7 +195,7 @@ a {
     .table-list li:before {
         content: "\f00c";
         font-family: 'FontAwesome';
-        color: #3fab91;
+        color: $secondary;
         display: inline-block;
         position: relative;
         right: 5px;
@@ -222,25 +225,16 @@ a {
     .table-buy {
         background: #FFF;
         padding: 15px;
-        text-align: left;
-        overflow: hidden;
-    }
-
-    .table-buy p {
-        float: left;
-        color: #37353a;
-        font-weight: 700;
-        font-size: 2.4em;
-    }
-
-    .table-buy p sup {
-        font-size: 0.5em;
-        position: relative;
-        left: 5px;
+        text-align: center;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 
     .table-buy .pricing-action {
-        float: right;
         color: #FFF;
         background: #e95846;
         padding: 10px 16px;
