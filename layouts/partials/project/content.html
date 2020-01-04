@@ -4,15 +4,6 @@
 {{end}}
 {{- $small := $image.Resize "600x" }}
 
-{{- $image.RelPermalink -}}
-
-{{ with .Resources.ByType "image" }}
-	<div class="Image">
-	{{ range . }}
-		<img src="{{ .RelPermalink }}">
-	{{ end }}
-	</div>
-{{ end }}
 
 
 <section class="section is-medium">
@@ -22,13 +13,21 @@
           <h1 class="title section-title">{{ .Title }}</h1>
           {{ with .Params.Subtitle }}<h5 class="subtitle is-5 is-muted">{{ . }}</h5>{{end}}
           <div class="divider"></div>
+
+          <div class="columns">
+            <div class="column is-two-thirds mt-30">
+              <img src="{{ $small.RelPermalink }}" alt="{{ .Title }}" width="600">
+            </div>
+            <div class="column mt-30 content">
+              <h3>Project Description</h3>
+              {{ .Content }}
+              {{- $title := .Title -}}
+              {{ with .Params.link }}
+              <a href="{{ . }}" class="button secondary-btn raised is-medium" title="{{ $title }}">Visit Site</a>
+              {{ end }}
+            </div>
+          </div>
         </div>
       </div>
-      {{$small.RelPermalink}}
-      <figure class="image">
-        {{/*  <img src="{{$image.RelPermalink}}" alt="Description">  */}}
-      </figure>
-
-      {{ .Content }}
     </div>
   </section>
