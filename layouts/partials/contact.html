@@ -8,19 +8,22 @@
     <div class="content-wrapper">
       <div class="columns">
         <div class="column is-6 is-offset-3">
-          <form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="lastname">
             <div class="columns is-multiline">
               <div class="column is-6">
-                <input class="input is-medium" type="text" placeholder="Enter your name">
+                <p class="is-hidden">
+                  <!-- Honey Pot -->
+                  <label>Don’t fill this out if you're human: <input name="lastname" /></label>
+                </p>
+                <input class="input is-medium" type="text" name="Name" required placeholder="Enter your name">
               </div>
               <div class="column is-6">
-                <input class="input is-medium" type="email" placeholder="Enter your email address">
+                <input class="input is-medium" type="email" email="Email" required placeholder="Enter your email address">
               </div>
               <div class="column is-12">
-                <textarea class="textarea" rows="10" placeholder="Write someting..."></textarea>
+                <textarea class="textarea" rows="10" name="Message" required placeholder="Write someting..."></textarea>
               </div>
               <div class="form-footer has-text-centered mt-10">
-                <div data-netlify-recaptcha="true"></div>
                 <button class="button cta is-large primary-btn raised is-clear">Send Message</button>
               </div>
             </div>
