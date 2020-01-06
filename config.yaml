@@ -196,6 +196,8 @@ params:
       icon: twitter
     - link: https://www.linkedin.com/in/kevinalanlloyd/
       icon: linkedin
+    - link: https://github.com/lloydkevin/
+      icon: github
 
     # - link: https://github.com/lucperkins/github-fresh
     #   # Icons are from Font Awesome
@@ -217,10 +219,17 @@ params:
           link: https://gohugo.io/
         - text: Sass
           link: https://sass-lang.com/
+      column2:
+        title: "Other Links"
+        links:
+        - text: Web Development 2
+          link: https://www.webdevelopment2.com/
+        - text: Scott Hanselman
+          link: https://www.hanselman.com/blog/
       column3:
         title: "Other Links"
         links:
-        - text: Web Development2.com
-          link: https://www.webdevelopment2.com/
-        - text: Tech articles
-          link: /blog/second
+        - text: Enterprise Craftsmanship
+          link: https://enterprisecraftsmanship.com/
+        - text: Jimmy Bogard
+          link: https://jimmybogard.com/
