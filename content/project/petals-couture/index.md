@@ -1,7 +1,7 @@
 ---
 title: "Petals Couture"
 date: 2020-01-02T14:17:13-06:00
-link: http://covenantadvisorsplanning.com
+link: http://www.petalscouture.com/
 img: feature.jpg
 ---
 
