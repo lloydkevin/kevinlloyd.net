@@ -1,7 +1,7 @@
 ---
 title: "Sensibly Chic Weddings"
 date: 2020-01-02T14:16:47-06:00
-link: http://covenantadvisorsplanning.com
+link: https://sensiblychicweddings.com/
 img: feature.jpg
 ---
 
