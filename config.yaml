@@ -1,4 +1,4 @@
-baseURL: /
+baseURL: "https://www.kevinlloyd.net/"
 languageCode: en-us
 title: Kevin Lloyd - Freelance Web Designer in Dallas/Addison Texas
 theme: hugo-fresh
@@ -45,7 +45,7 @@ params:
   # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
   - title: Home
-    url: /
+    url: /#
   - title: Recent Work
     url: "/#recent"
   # - title: Dropdown
