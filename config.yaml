@@ -1,61 +1,36 @@
-baseURL: "https://www.kevinlloyd.net/"
+---
+baseURL: https://www.kevinlloyd.net/
 languageCode: en-us
 title: Kevin Lloyd - Freelance Web Designer in Dallas/Addison Texas
 theme: hugo-fresh
 googleAnalytics: UA-100181-12
-# Disables warnings
 disableKinds:
 - taxonomy
 - taxonomyTerm
 markup:
   goldmark:
     renderer:
-      unsafe: true # Allows you to write raw html in your md files
-
+      unsafe: true
 params:
-  # Open graph allows easy social sharing. If you don't want it you can set it to false or just delete the variable
   openGraph: true
-  # Used as meta data; describe your site to make Google Bots happy
-  description:
-  navbarlogo:
-  # Logo (from static/images/logos/___)
-    # image: logos/fresh.svg
-    # link: /
+  description: 
+  navbarlogo: 
   font:
-    name: "Open Sans"
-    sizes: [400,600]
+    name: Open Sans
+    sizes:
+    - 400
+    - 600
   hero:
-    # Main hero title
     title: Kevin Lloyd
-    # Hero subtitle (optional)
-    subtitle: Freelance Web Designer/Developer in Dallas/Addison Texas.
-    # Button text
+    subtitle: Freelance Web Designer/Developer in Dallas/Frisco Texas.
     buttontext: Contact Me
-    # Where the main hero button links to
     buttonlink: "#contact"
-    # Hero image (from static/images/___)
     image: illustrations/worker.svg
-    # Footer logos (from static/images/logos/clients/___.svg)
-    # clientlogos:
-    # - systek
-    # - tribe
-    # - kromo
-    # - infinite
-    # - gutwork
-  # Customizable navbar. For a dropdown, add a "sublinks" list.
   navbar:
   - title: Home
-    url: /#
+    url: "/#"
   - title: Recent Work
     url: "/#recent"
-  # - title: Dropdown
-  #   sublinks:
-  #   - title: Dropdown item
-  #     url: /
-  #   - title: Dropdown item
-  #     url: /
-  #   - title: Dropdown item
-  #     url: /
   - title: About Me
     url: "/#about"
   - title: Testimonials
@@ -63,51 +38,56 @@ params:
   - title: Contact Me
     url: "/#contact"
     button: true
-
   about:
     title: About Me
-    subtitle:
+    subtitle: 
     tiles:
-      - title: Who Am I
-        text: >
-          I'm Kevin Lloyd, from North Texas (Dallas, Addison, Frisco).
-          I'm a full time Senior Software Architect in the Dallas area and part time Web Development enthusiast.
-          I specialize in creating a web experience for small and sole proprietor businesses.
-          Using a variety of tools from WordPress theme development to Custom Application Development.
-      - title: What I Do
-        text: >
-          My days involve building websites for work with the Microsoft stack (ASP.NET Core, C#, etc).
-          My nights and weekends are filled with my passion for Web Development and Microsoft Azure Cloud Technology.
+    - title: Who Am I
+      text: 'I''m Kevin Lloyd, from North Texas (Dallas, Addison, Frisco). I''m a
+        full time Senior Software Architect in the Dallas area and part-time Web Development
+        enthusiast. I specialize in creating a web experience for small and sole-proprietor
+        businesses. Using a variety of tools from WordPress theme development to Custom
+        Application Development.
+
+'
+    - title: What I Do
+      text: 'My days involve building websites for work with the Microsoft stack (ASP.NET
+        Core, C#, etc). My nights and weekends are filled with my passion for Web
+        Development and Microsoft Azure Cloud Technology.
+
+'
     skills:
-      title: "I currently focus on the following technologies:"
+      title: 'I currently focus on the following technologies:'
       sets:
-        - Web Application Design
-        - ASP.NET Core
-        - Django
-        - Vue.js
-        - Web Design
-        - Web Presence
-        - WordPress Theme Customization
-        - Landing Pages
-
-
+      - Web Application Design
+      - ASP.NET Core
+      - Django
+      - Blazor
+      - Vue.js
+      - Web Design
+      - Web Presence
+      - WordPress Theme Customization
+      - Landing Pages
   recent:
     title: Recent Work
-    # subtitle: with great responsibility
-
   section2:
     title: You're here because you want the best
     subtitle: And we know it
     features:
     - title: Powerful and unified interface
-      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-      # Icon (from /images/illustrations/icons/___.svg)
+      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare
+        magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem.
+        Etiam finibus odio quis feugiat facilisis.
       icon: laptop-globe
     - title: Cross-device synchronisation
-      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare
+        magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem.
+        Etiam finibus odio quis feugiat facilisis.
       icon: doc-sync
     - title: Nomad system
-      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+      text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare
+        magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem.
+        Etiam finibus odio quis feugiat facilisis.
       icon: mobile-feed
   section3:
     title: One platform
@@ -115,42 +95,59 @@ params:
     image: illustrations/mockups/app-mockup.png
     buttonText: Get started
     buttonLink: "#"
-
   testimonials:
     title: From My Clients!
-    subtitle:
+    subtitle: 
     clients:
-    - name: How I Save Money
-      quote: >
-        Very professional and easy to work with. Kevin has refreshed my website over 4 times throughout the years.
-        His high standards and attention to detail and quality have left me an extremely happy customer.
-
     - name: Sensibly Chic Weddings
-      quote: >
-        I'm very pleased with my website, and Kevin was such a pleasure to work with. He took the time to determine my wants and needs, and welcomed my personal design preferences. I needed a modern website to appeal to my target audience, and Kevin delivered it in only a few weeks.
+      quote: 'I''m very pleased with my website, and Kevin was such a pleasure to
+        work with. He took the time to determine my wants and needs, and welcomed
+        my personal design preferences. I needed a modern website to appeal to my
+        target audience, and Kevin delivered it in only a few weeks.
 
+'
+    - name: How I Save Money
+      quote: 'Very professional and easy to work with. Kevin has refreshed my website
+        over 4 times throughout the years. His high standards and attention to detail
+        and quality have left me an extremely happy customer.
+
+'
     - name: Covenant Advisors
-      quote-org: >
-        It was easy working with Kevin throughout the design and implementation process. I had my outline and page content ready when we began working together. He was able to review that and make some constructive suggestions to improve the overall site and layout. The tutorial he prepared on how to update the content really proves beneficial when it's been several months between updating articles or references.
-        <br /><br />
-        The site fits my needs. It's professional, yet not too sterile. I really didn't expect to get very many new clients via the website. As a financial advisor most of the prospects we see are based on word-of-mouth. However what regularly impresses me is that those who are interested in our services go to the website for information. Often in the first meeting they will comment on how much they liked the website. I had one client who found me through a referral site and then used our web site to make a final selection. That's what I was looking for in a reasonably priced web design, so it worked.
-        <br /><br />
-        There are several web design businesses that cater strictly to financial advisors. But I enjoy working with someone who is flexible and doesn't treat me like a small business. Overall I'm very pleased with the service we received and would work with Kevin again.
+      quote-org: 'It was easy working with Kevin throughout the design and implementation
+        process. I had my outline and page content ready when we began working together.
+        He was able to review that and make some constructive suggestions to improve
+        the overall site and layout. The tutorial he prepared on how to update the
+        content really proves beneficial when it''s been several months between updating
+        articles or references. <br /><br /> The site fits my needs. It''s professional,
+        yet not too sterile. I really didn''t expect to get very many new clients
+        via the website. As a financial advisor most of the prospects we see are based
+        on word-of-mouth. However what regularly impresses me is that those who are
+        interested in our services go to the website for information. Often in the
+        first meeting they will comment on how much they liked the website. I had
+        one client who found me through a referral site and then used our web site
+        to make a final selection. That''s what I was looking for in a reasonably
+        priced web design, so it worked. <br /><br /> There are several web design
+        businesses that cater strictly to financial advisors. But I enjoy working
+        with someone who is flexible and doesn''t treat me like a small business.
+        Overall I''m very pleased with the service we received and would work with
+        Kevin again.
 
-      quote: >
-        There are several web design businesses that cater strictly to financial advisors.
-        But I enjoy working with someone who is flexible and doesn't treat me like a small business.
-        Overall I'm very pleased with the service we received and would work with Kevin again.
+'
+      quote: 'There are several web design businesses that cater strictly to financial
+        advisors. But I enjoy working with someone who is flexible and doesn''t treat
+        me like a small business. Overall I''m very pleased with the service we received
+        and would work with Kevin again.
 
+'
   pricing:
     title: What You Get
-    subtitle:
+    subtitle: 
     options:
       option1:
         title: Landing Page
         price: 350-500
         items:
-        - $30/month maintenance *
+        - "$30/month maintenance *"
         - 5 Email Addresses
         - Up to 6 Sections
         - Contact Form
@@ -161,36 +158,29 @@ params:
         price: 500-800
         items:
         - Everything in the "Landing Page" package.
-        - $50/month maintenance *
+        - "$50/month maintenance *"
         - Blog Page
       option3:
         title: Complex Website
         price: 800-1500
         items:
         - Everything in the "Basic Site" package.
-        - $50/month maintenance *
+        - "$50/month maintenance *"
         - Photo Gallery
         - Logo Design
         - Online Sales (E-Commerce)
-
-
     details:
       title: Pricing Details
       subtitle: "* Maintenance includes:"
       list:
-        - Website hosting, domain, 5 email addresses
-        - Security updates
-        - Daily backups
-        - 2 hours of technical support (minor modifications, etc.)
-
+      - Website hosting, domain, 5 email addresses
+      - Security updates
+      - Daily backups
+      - 2 hours of technical support (minor modifications, etc.)
   section5: true
-
   footer:
-    # Logo (from /images/logos/___)
     logo: fresh-white-alt.svg
-    # Social Media Title
     socialmediatitle: Follow Me
-    # Social media links (GitHub, Twitter, etc.). All are optional.
     socialmedia:
     - link: https://twitter.com/kevinlloyd749
       icon: twitter
@@ -198,37 +188,27 @@ params:
       icon: linkedin
     - link: https://github.com/lloydkevin/
       icon: github
-
-    # - link: https://github.com/lucperkins/github-fresh
-    #   # Icons are from Font Awesome
-    #   icon: github
-    # - link: https://dribbble.com/#
-    #   icon: dribbble
-    # - link: https://facebook.com/#
-    #   icon: facebook
-    # - link: https://twitter.com/lucperkins
-    #   icon: twitter
-    # - link: https://bitbucket.org/#
-    #   icon: bitbucket
     bulmalogo: false
     quicklinks:
       column1:
-        title: "Tools Used"
+        title: Tools Used
         links:
         - text: Hugo
           link: https://gohugo.io/
         - text: Sass
           link: https://sass-lang.com/
       column2:
-        title: "Other Links"
+        title: Other Links
         links:
         - text: Web Development 2
           link: https://www.webdevelopment2.com/
         - text: Scott Hanselman
           link: https://www.hanselman.com/blog/
       column3:
-        title: "Other Links"
+        title: Other Links
         links:
+        - text: Ardalis
+          link: https://ardalis.com/blog
         - text: Enterprise Craftsmanship
           link: https://enterprisecraftsmanship.com/
         - text: Jimmy Bogard
