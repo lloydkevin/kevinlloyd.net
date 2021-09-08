@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
-  <head>
-    {{ partial "meta.html" . }}
-    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
-    {{ partial "css.html" . }}
-  </head>
-  <body>
-    <!-- Preloader -->
-    <div id="preloader">
-      <div id="status"></div>
-    </div>
-
-    {{ block "main" . }}
+    {{ define "main" }}
 
     {{ partial "project/single.html" . }}
 
-    {{ if .Params.include_footer }}
     {{ partial "footer.html" . }}
-    {{ end }}
 
     <!-- Back To Top Button -->
     <div id="backtotop"><a href="#"></a></div>
@@ -27,7 +12,3 @@
     {{ end }}
 
     {{ end }}
-
-    {{ partial "javascript.html" . }}
-  </body>
-</html>
