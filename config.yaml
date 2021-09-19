@@ -145,29 +145,29 @@ params:
     options:
       option1:
         title: Landing Page
-        price: 350-500
+        price: 600-800
         items:
         - "$30/month maintenance *"
         - 5 Email Addresses
-        - Up to 6 Sections
+        - Up to 4 Sections
         - Contact Form
         - About
       option2:
         recommended: true
         title: Basic Site
-        price: 500-800
+        price: 800-1,500
         items:
         - Everything in the "Landing Page" package.
         - "$50/month maintenance *"
-        - Blog Page
+        - 1-5 pages
       option3:
         title: Complex Website
-        price: 800-1500
+        price: 1,500+
         items:
         - Everything in the "Basic Site" package.
         - "$50/month maintenance *"
         - Photo Gallery
-        - Logo Design
+        - Blog
         - Online Sales (E-Commerce)
     details:
       title: Pricing Details
