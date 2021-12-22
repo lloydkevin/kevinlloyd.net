@@ -1,0 +1,62 @@
+{{ define "main" }}
+
+{{ $image := false }}
+{{ with partial "get-image.html" . }}
+  {{ $image = .Resize "730x" }}
+{{ end }}
+
+<section>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-10 col-lg-8">
+				<article>
+					<div class="article__title text-center">
+						<h1 class="h2">{{ .Title }}</h1> <span>{{ .Date.Format "January 2, 2006" }} 
+							<!-- in </span><span><a href="#">Web Design</a></span>  -->
+						{{ with .Params.tags }}
+							in
+							
+								{{ range . }}
+								<span><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></span>
+								{{ end }}
+							
+						
+						{{ end }}
+					
+					</div>
+					<div class="article__body"> 
+						
+						{{ if $image }}
+						<img alt="{{ .Title }}" src="{{ $image.RelPermalink }}">
+						{{ end }}
+						
+						<div>
+							{{ .Content }}
+						</div>
+						
+					</div>
+					{{ with .Site.DisqusShortname }}
+					<div>
+						{{ template "_internal/disqus.html" . }}
+					</div>
+					{{ end }}
+
+
+					<!-- <div class="article__share text-center">
+						<a class="btn bg--facebook btn--icon" href="#"> <span class="btn__text">
+					<i class="socicon socicon-facebook"></i>
+					Share on Facebook
+				</span> </a>
+						<a class="btn bg--twitter btn--icon" href="#"> <span class="btn__text">
+					<i class="socicon socicon-twitter"></i>
+					Share on Twitter
+				</span> </a>
+					</div> -->
+				</article>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- {{ partial "sidebar.html" . }} -->
+{{ end }}
