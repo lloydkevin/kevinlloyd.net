@@ -1,0 +1,11 @@
+{{ $image := false }}
+{{ with .Params.images }}
+  {{ $image = resources.Get (index . 0) }}
+{{ end }}
+{{ with .Params.image }}
+  {{ $image = resources.Get . }}
+{{ end }}
+{{ with .Resources.ByType "image" }}
+  {{ $image = index . 0 }}
+{{ end }}
+{{ return $image }}
