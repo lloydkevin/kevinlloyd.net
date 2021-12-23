@@ -1,52 +1,42 @@
-{{- $footer      := .Site.Params.footer }}
-{{- $logo        := index $footer "logo" }}
-{{- $quickLinks  := index $footer "quicklinks" }}
-{{- $socialMedia := index $footer "socialmedia" }}
-{{- $bulmaLogo   := index $footer "bulmalogo" }}
-{{- $socialMediaTitle    := index $footer "socialmediatitle" }}
-<footer class="footer footer-dark">
-  <div class="container">
-    <div class="columns">
-      {{- range $quickLinks }}
-        <div class="column">
-          <div class="footer-column">
-            <div class="footer-header">
-                <h3>{{ .title }}</h3>
-            </div>
-            <ul class="link-list">
-              {{- range .links }}
-              <li>
-                <a href="{{ .link }}" target="_blank">
-                  {{ .text }}
-                </a>
-              </li>
-              {{- end }}
-            </ul>
-          </div>
-        </div>
-      {{- end }}
-      <div class="column">
-        <div class="footer-column">
-          <div class="footer-header">
-            <h3>{{ $socialMediaTitle }}</h3>
-            <nav class="level is-mobile">
-              <div class="level-left">
-                {{- range $socialMedia }}
-                <a class="level-item" href="{{ .link }}">
-                  <span class="icon"><i class="fa fa-{{ .icon }}"></i></span>
-                </a>
-                {{- end }}
-              </div>
-            </nav>
-
-            {{- if $bulmaLogo }}
-            <a href="https://bulma.io" target="_blank">
-              <img src="{{ "/images/logos/made-with-bulma.png" | relURL }}" alt="Made with Bulma" width="128" height="24">
-            </a>
-            {{- end }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<footer class="space--sm footer-2 bg--dark">
+	<div class="container">
+		<div class="row">
+			<div class="col-md">
+				<h6 class="type--uppercase">Tools Used</h6>
+				<ul class="list--hover">
+					<li><a href="https://gohugo.io/">Hugo</a></li>
+					<li><a href="https://sass-lang.com/">Sass</a></li>
+				</ul>
+			</div>
+			<div class="col-md">
+				<h6 class="type--uppercase">People I Follow</h6>
+				<ul class="list--hover">
+					<li><a href="https://www.webdevelopment2.com/">Web Development 2</a></li>
+					<li><a href="https://www.hanselman.com/blog/">Scott Hanselman</a></li>
+				</ul>
+			</div>
+			<div class="col-md">
+				<h6 class="type--uppercase">People I Follow</h6>
+				<ul class="list--hover">
+					<li><a href="https://ardalis.com/blog">Ardalis</a></li>
+					<li><a href="https://enterprisecraftsmanship.com/">Enterprise Craftsmanship</a></li>
+					<li><a href="https://jimmybogard.com/">Jimmy Bogard</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<span class="type--fine-print">© <span class="update-year">{{ now.Year }}</span> Kevin Lloyd.</span> 
+				<!-- <a class="type--fine-print" href="#">Privacy Policy</a> 
+				<a class="type--fine-print" href="#">Legal</a> -->
+			</div>
+			<div class="col-sm-6 text-right text-left-xs">
+				<ul class="social-list list-inline list--hover">
+					<li><a href="https://twitter.com/kevinlloyd749"><i class="socicon socicon-twitter icon icon--xs"></i></a></li>
+					<li><a href="https://github.com/lloydkevin/"><i class="socicon socicon-github icon icon--xs"></i></a></li>
+					<li><a href="https://www.linkedin.com/in/kevinalanlloyd/"><i class="socicon socicon-linkedin icon icon--xs"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </footer>

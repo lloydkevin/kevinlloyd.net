@@ -1,0 +1,33 @@
+{{ $image := false }}
+{{ with partial "get-image.html" . }}
+  {{ $image = .Resize "730x" }}
+{{ end }}
+
+<article class="masonry__item voh vnn">
+	<div class="article__title text-center">
+		<a href="{{ .RelPermalink }}">
+			<h2>{{ .Title }}</h2>
+		</a> <span>{{ .Date.Format "January 2, 2006" }} in </span>
+		<span>
+			{{ range .Params.tags }}
+			<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+			{{ end }}
+		</span> </div>
+	<div class="article__body">
+		
+		{{ if $image }}
+		<a href="{{ .RelPermalink }}"> <img class="featured" alt="{{ .Title }}" src="{{ $image.RelPermalink }}"> </a>
+		{{ end }}
+
+		<div>
+			{{ .Summary }}
+
+		</div>
+		
+		{{ if .Truncated }}
+			<a href="{{ .RelPermalink }}">Read more...</a>
+		{{ end }}
+
+		
+	</div>
+</article>

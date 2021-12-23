@@ -1,23 +1,215 @@
 {{ define "main" }}
-    {{ if .Site.Params.hero }}
-    {{ partial "hero.html" . }}
-    {{ end }}
 
-    {{ partial "recent.html" . }}
-    {{ partial "about.html" . }}
-    {{ partial "testimonials.html" . }}
-    {{ partial "pricing.html" . }}
-    {{ partial "contact.html" . }}
+<section class="cover imagebg text-center parallax" data-overlay="8">
+	<div class="background-image-holder"> <img alt="background" src="{{ "img/hero-bg.jpg" | relURL}}"> </div>
+	<div class="container">
+		<div class="row align-items-center" style="min-height: 100vh;">
+			<div class="col-lg-7 col-md-8">
+				<h1>Kevin Lloyd<br></h1>
+				<h2 class="lead">Freelance Web Designer/Developer in Dallas/Frisco Texas.</h2>
+				<a class="btn btn--primary type--uppercase" href="#contact"> <span class="btn__text">
+					Contact Me
+				</span> </a>
+			</div>
+		</div>
+	</div>
+</section>
 
-    {{ if .Site.Params.footer }}
-    {{ partial "footer.html" . }}
-    {{ end }}
+<section id="recent">
+	{{- $projects := where .Site.RegularPages "Section" "project" -}}
+	
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">Recent Work</h2>
+			</div>
+			
+		</div>
+		<div class="row">
+			{{- range $projects -}}
+			<div class="col-md-3 project">
+				{{ $image := false }}
+				{{ with partial "get-image.html" . }}
+				{{ $image = .Fill "350x233" }}
+				{{ end }}
+				
+				<div class="feature">
+					<a href="{{.RelPermalink}}" title="{{ .Title }}">
+						<img alt="{{.Title}}" src="{{ $image.RelPermalink }}"  class="border--round">
+					</a>
+					<h5>
+						<a href="{{.RelPermalink}}" title="{{ .Title }}">
+							{{.Title}}
+						</a>
+					</h4>
+				</div>
+				
+				
+			</div>
+			{{- end -}}
+			
+			
+		</div>
+		
+	</div>
+</section>
 
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
-
-    {{ if .Site.Params.sidebar }}
-    {{ partial "sidebar.html" . }}
-    {{ end }}
+<section id="about" class="bg--primary">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">About Me</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div>
+					<h4>Who Am I</h4>
+					<p class="mb-5">
+						I'm Kevin Lloyd, from North Texas (Dallas, Frisco).
+						I'm a full time Senior Software Architect in the Dallas area and part-time Web Development enthusiast.
+						I specialize in creating a web experience for small and sole-proprietor businesses.
+						Using a variety of tools from WordPress theme development to Custom Application Development.
+					</p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div>
+					<h4>What I Do</h4>
+					<p class="mb-5">
+						My days involve building websites for work with the Microsoft stack (ASP.NET Core, C#, etc).
+						My nights and weekends are filled with my passion for Web Development and Microsoft Azure Cloud Technology.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="text-center" id="testimonials">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">From My Clients!</h2>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-8 col-md-10">
+				<div class="slider" data-paging="true" data-timing="3000">
+					<ul class="slides">
+						<li>
+							<div class="testimonial">
+								<blockquote> 
+									I'm very pleased with my website, and Kevin was such a pleasure to work with. He took the time to determine my wants and needs, and welcomed my personal design preferences. I needed a modern website to appeal to my target audience, and Kevin delivered it in only a few weeks.
+								</blockquote>
+								<h5>Sensibly Chic Weddings</h5> 
+							</div>
+						</li>
+						
+						<li>
+							<div class="testimonial">
+								<blockquote> 
+									Very professional and easy to work with. Kevin has refreshed my website over 4 times throughout the years. His high standards and attention to detail and quality have left me an extremely happy customer.
+								</blockquote>
+								<h5>How I Save Money</h5> 
+							</div>
+						</li>
+						
+						<li>
+							<div class="testimonial">
+								<blockquote> 
+									There are several web design businesses that cater strictly to financial advisors. But I enjoy working with someone who is flexible and doesn’t treat me like a small business. Overall I’m very pleased with the service we received and would work with Kevin again.
+								</blockquote>
+								<h5>Covenant Advisors</h5> 
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="text-center bg--primary" id="pricing">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">What You Get</h2>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="pricing pricing-1 boxed boxed--border boxed--lg">
+					<h4>Landing Page<br></h4> <span class="h1"><span class="pricing__dollar">$</span>600 - 800</span>
+					<ul style="color: #666666;">
+						<li>$30/month maintenance *</li>
+						<li>5 Email Addresses</li>
+						<li>Up to 4 Sections</li>
+						<li>Contact Form</li>
+						<li>About</li>
+					</ul>
+					<a class="btn btn--primary" href="#contact"> <span class="btn__text">
+						Contact Me
+					</span> </a>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="pricing pricing-1 boxed boxed--border boxed--lg boxed--emphasis">
+					<h4>Basic Site<br></h4> <span class="h1"><span class="pricing__dollar">$</span>800 - 1500</span>
+					<ul style="color: #666666;">
+						<li>Everything in the "Landing Page" package.</li>
+						<li>$50/month maintenance *</li>
+						<li>1-5 pages</li>
+					</ul>
+					<a class="btn btn--primary-1" href="#contact"> <span class="btn__text">
+						Contact Me
+					</span> </a>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="pricing pricing-1 boxed boxed--border boxed--lg">
+					<h4>Complex Website<br></h4> <span class="h1"><span class="pricing__dollar">$</span>1500+</span>
+					
+					<ul style="color: #666666;">
+						<li>Everything in the "Basic Site" package.</li>
+						<li>$50/month maintenance *</li>
+						<li>Photo Gallery</li>
+						<li>Blog</li>
+						<li>Online Sales (E-Commerce)</li>
+					</ul>
+					<a class="btn btn--primary" href="#contact"> <span class="btn__text">
+						Contact Me
+					</span> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="text-center bg--secondary" id="contact">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">Drop Me A Line</h2>
+			</div>
+		</div>
+		<div class="row justify-content-center no-gutters">
+			<div class="col-md-8 col-lg-7">
+				<form method="post" name="contact" data-netlify="true" class="text-left row mx-0"
+					data-success="Thanks for your enquiry, we'll be in touch shortly."
+					data-error="Please fill in all fields correctly.">
+					<div class="col-md-6"> <label>Your Name:</label> <input type="text" name="name" class="validate-required"
+							required> </div>
+					<div class="col-md-6"> <label>Email Address:</label> <input type="email" name="email"
+							class="validate-required validate-email fbc-has-badge fbc-UID_2" required> </div>
+					<div class="col-md-12"> <label>Message:</label> <textarea rows="6" name="Message" class="validate-required"
+							required></textarea> </div>
+					<div class="col-md-5 col-lg-4"> <button type="submit" class="btn btn--primary type--uppercase">Send
+							Message</button> </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
 
 {{ end }}

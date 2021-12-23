@@ -1,14 +1,37 @@
-    {{ define "main" }}
+{{ define "main" }}
 
-    {{ partial "project/single.html" . }}
+{{- $image := index (.Resources.Match "feature.*") 0 -}}
+{{- if not $image }}
+{{$image = index (.Resources.ByType "image") 0}}
+{{end}}
+{{- $small := $image.Resize "600x" }}
 
-    {{ partial "footer.html" . }}
 
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
 
-    {{ if .Params.sidebar }}
-    {{ partial "single/sidebar.html" . }}
-    {{ end }}
+<section class="switchable feature-large switchable--switch">
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-md-6">
+                <h1>{{ .Title }}</h1>
+                <img alt="{{ .Title }}" class="border--round box-shadow-wide" src="{{ $small.RelPermalink }}"> </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="switchable__text">
+                    <h2>Project Details</h2>
+                    
+                    {{ .Content }}
+                    {{- $title := .Title -}}
+                    {{ with .Params.link }}
+                    <a href="{{ . }}" class="btn btn--primary" title="{{ $title }}">
+                        <span class="btn__text">Visit Site</span>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    {{ end }}
+
+
+<!-- {{ partial "sidebar.html" . }} -->
+{{ end }}
