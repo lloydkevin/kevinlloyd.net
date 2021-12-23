@@ -1,6 +1,6 @@
 {{ $image := false }}
 {{ with partial "get-image.html" . }}
-  {{ $image = .Resize "730x" }}
+  {{ $image = .Resize "730x webp" }}
 {{ end }}
 
 <article class="masonry__item voh vnn">

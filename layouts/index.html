@@ -30,12 +30,12 @@
 			<div class="col-md-3 project">
 				{{ $image := false }}
 				{{ with partial "get-image.html" . }}
-				{{ $image = .Fill "255x170" }}
+				{{ $image = .Fill "255x170 webp" }}
 				{{ end }}
 				
 				<div class="feature">
 					<a href="{{.RelPermalink}}" title="{{ .Title }}">
-						<img alt="{{.Title}}" src="{{ $image.RelPermalink }}" width="255" height="170"  class="border--round">
+						<img alt="{{.Title}}" src="{{ $image.RelPermalink }}" width="255" height="170" class="border--round">
 					</a>
 					<h5>
 						<a href="{{.RelPermalink}}" title="{{ .Title }}">
