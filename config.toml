@@ -5,6 +5,10 @@ title = 'Kevin Lloyd - Freelance Web Designer/Developer in Dallas/Frisco Texas'
 enableRobotsTXT = true
 googleAnalytics = 'UA-100181-12'
 
+
+[permalinks]
+  blog = "/:title/"
+
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
