@@ -255,6 +255,8 @@ mr = (function (mr, $, window, document){
 
 }(mr, jQuery, window, document));
 
+
+//////////////// Forms
 mr = (function (mr, $, window, document){
     "use strict";
     
@@ -763,3 +765,46 @@ mr = (function (mr, $, window, document){
 
 //////////////// SmoothScroll
 var scroll = new SmoothScroll('a[href*="#"]');
+
+//////////////// Toggle Class
+mr = (function (mr, $, window, document){
+    "use strict";
+    
+    mr.toggleClass = mr.toggleClass || {};
+    
+    mr.toggleClass.documentReady = function($){
+        $('[data-toggle-class]').each(function(){
+        	var element = $(this),
+                data    = element.attr('data-toggle-class').split("|");
+        		
+
+            $(data).each(function(){
+                var candidate     = element,
+                    dataArray     = [],
+            	    toggleClass   = '',
+            	    toggleElement = '',
+                    dataArray = this.split(";");
+
+            	if(dataArray.length === 2){
+            		toggleElement = dataArray[0];
+            		toggleClass   = dataArray[1];
+            		$(candidate).on('click',function(){
+                        if(!candidate.hasClass('toggled-class')){
+                            candidate.toggleClass('toggled-class');
+                        }else{
+                            candidate.removeClass('toggled-class');
+                        }
+            			$(toggleElement).toggleClass(toggleClass);
+            			return false;
+            		});
+            	}else{
+            		console.log('Error in [data-toggle-class] attribute. This attribute accepts an element, or comma separated elements terminated witha ";" followed by a class name to toggle');
+            	}
+            });
+        });
+    };
+
+    mr.components.documentReady.push(mr.toggleClass.documentReady);
+    return mr;
+
+}(mr, jQuery, window, document));
