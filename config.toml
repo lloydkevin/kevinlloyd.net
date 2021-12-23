@@ -1,0 +1,37 @@
+baseURL = 'https://www.kevinlloyd.net/'
+languageCode = 'en-us'
+title = 'Kevin Lloyd - Freelance Web Designer/Developer in Dallas/Frisco Texas'
+
+enableRobotsTXT = true
+googleAnalytics = 'UA-100181-12'
+
+
+[permalinks]
+  blog = "/:title/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+            
+[imaging]
+quality = 95
+
+[params]
+  Subtitle = 'Hugo is Absurdly Fast!'
+  mainSections = ['blog']
+
+
+[menu]
+[[menu.main]]
+  identifier = 'about'
+  name = 'about hugo'
+  pre = "<i class='fa fa-heart'></i>"
+  url = '/about/'
+  weight = -110
+[[menu.main]]
+  name = 'getting started'
+  post = "<span class='alert'>New!</span>"
+  pre = "<i class='fa fa-road'></i>"
+  url = '/getting-started/'
+  weight = -100
