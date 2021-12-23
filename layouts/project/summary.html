@@ -1,13 +1,14 @@
 {{ $image := false }}
 {{ with partial "get-image.html" . }}
-  {{ $image = .Resize "730x" }}
+  {{ $image = .Fill "730x350" }}
 {{ end }}
 
 <article class="masonry__item voh vnn">
 	<div class="article__title text-center">
 		<a href="{{ .RelPermalink }}">
 			<h2>{{ .Title }}</h2>
-		</a> <span>{{ .Date.Format "January 2, 2006" }} in </span>
+		</a> 
+		{{/*  <span>{{ .Date.Format "January 2, 2006" }} in </span>  */}}
 		<span>
 			{{ range .Params.tags }}
 			<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>

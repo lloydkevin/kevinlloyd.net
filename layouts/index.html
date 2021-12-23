@@ -6,10 +6,10 @@
 		<div class="row align-items-center" style="min-height: 100vh;">
 			<div class="col-lg-7 col-md-8">
 				<h1>Kevin Lloyd<br></h1>
-				<p class="lead">Freelance Web Designer/Developer in Dallas/Frisco Texas.</p>
+				<h2 class="lead">Freelance Web Designer/Developer in Dallas/Frisco Texas.</h2>
 				<a class="btn btn--primary type--uppercase" href="#contact"> <span class="btn__text">
-			Contact Me
-		</span> </a>
+					Contact Me
+				</span> </a>
 			</div>
 		</div>
 	</div>
@@ -17,41 +17,38 @@
 
 <section id="recent">
 	{{- $projects := where .Site.RegularPages "Section" "project" -}}
-
+	
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h2 class="text-center">Recent Work</h3>
+				<h2 class="text-center">Recent Work</h2>
 			</div>
 			
 		</div>
 		<div class="row">
 			{{- range $projects -}}
 			<div class="col-md-3 project">
-				{{- $image := index (.Resources.Match "feature.*") 0 -}}
-				{{- if not $image }}
-				{{- $image = index (.Resources.ByType "image") 0 -}}
-				{{end}}
-				{{- $thumb := $image.Fill "350x233" }}
-
-
+				{{ $image := false }}
+				{{ with partial "get-image.html" . }}
+				{{ $image = .Fill "350x233" }}
+				{{ end }}
 				
 				<div class="feature">
 					<a href="{{.RelPermalink}}" title="{{ .Title }}">
-						<img alt="{{.Title}}" src="{{ $thumb.RelPermalink }}"  class="border--round">
+						<img alt="{{.Title}}" src="{{ $image.RelPermalink }}"  class="border--round">
 					</a>
 					<h5>
 						<a href="{{.RelPermalink}}" title="{{ .Title }}">
 							{{.Title}}
-						  </a>
+						</a>
 					</h4>
 				</div>
-	  
 				
-			  </div>
+				
+			</div>
 			{{- end -}}
-
-
+			
+			
 		</div>
 		
 	</div>
@@ -61,16 +58,15 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h3 class="text-center">About Me</h3>
+				<h2 class="text-center">About Me</h2>
 			</div>
-			
 		</div>
 		<div class="row">
 			<div class="col-md-6">
 				<div>
 					<h4>Who Am I</h4>
-					<p>
-						I'm Kevin Lloyd, from North Texas (Dallas, Addison, Frisco).
+					<p class="mb-5">
+						I'm Kevin Lloyd, from North Texas (Dallas, Frisco).
 						I'm a full time Senior Software Architect in the Dallas area and part-time Web Development enthusiast.
 						I specialize in creating a web experience for small and sole-proprietor businesses.
 						Using a variety of tools from WordPress theme development to Custom Application Development.
@@ -80,7 +76,7 @@
 			<div class="col-md-6">
 				<div>
 					<h4>What I Do</h4>
-					<p>
+					<p class="mb-5">
 						My days involve building websites for work with the Microsoft stack (ASP.NET Core, C#, etc).
 						My nights and weekends are filled with my passion for Web Development and Microsoft Azure Cloud Technology.
 					</p>
@@ -91,6 +87,12 @@
 </section>
 <section class="text-center" id="testimonials">
 	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">From My Clients!</h2>
+			</div>
+		</div>
+		
 		<div class="row">
 			<div class="col-lg-8 col-md-10">
 				<div class="slider" data-paging="true" data-timing="3000">
@@ -128,8 +130,14 @@
 		</div>
 	</div>
 </section>
-<section class="text-center bg--primary">
+<section class="text-center bg--primary" id="pricing">
 	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2 class="text-center">What You Get</h2>
+			</div>
+		</div>
+		
 		<div class="row">
 			<div class="col-md-4">
 				<div class="pricing pricing-1 boxed boxed--border boxed--lg">
@@ -155,8 +163,8 @@
 						<li>1-5 pages</li>
 					</ul>
 					<a class="btn btn--primary-1" href="#contact"> <span class="btn__text">
-				Contact Me
-			</span> </a>
+						Contact Me
+					</span> </a>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -182,17 +190,22 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h3 class="text-center">Drop Me A Line</h3>
+				<h2 class="text-center">Drop Me A Line</h2>
 			</div>
-			
 		</div>
 		<div class="row justify-content-center no-gutters">
 			<div class="col-md-8 col-lg-7">
-				<form method="post" action="https://formspree.io/f/xpzbznoa" class="text-left row mx-0" data-success="Thanks for your enquiry, we'll be in touch shortly." data-error="Please fill in all fields correctly.">
-					<div class="col-md-6"> <label>Your Name:</label> <input type="text" name="name" class="validate-required" required> </div>
-					<div class="col-md-6"> <label>Email Address:</label> <input type="email" name="email" class="validate-required validate-email fbc-has-badge fbc-UID_2" required> </div>
-					<div class="col-md-12"> <label>Message:</label> <textarea rows="6" name="Message" class="validate-required" required></textarea> </div>
-					<div class="col-md-5 col-lg-4"> <button type="submit" class="btn btn--primary type--uppercase">Send Message</button> </div>
+				<form method="post" name="contact" data-netlify="true" class="text-left row mx-0"
+					data-success="Thanks for your enquiry, we'll be in touch shortly."
+					data-error="Please fill in all fields correctly.">
+					<div class="col-md-6"> <label>Your Name:</label> <input type="text" name="name" class="validate-required"
+							required> </div>
+					<div class="col-md-6"> <label>Email Address:</label> <input type="email" name="email"
+							class="validate-required validate-email fbc-has-badge fbc-UID_2" required> </div>
+					<div class="col-md-12"> <label>Message:</label> <textarea rows="6" name="Message" class="validate-required"
+							required></textarea> </div>
+					<div class="col-md-5 col-lg-4"> <button type="submit" class="btn btn--primary type--uppercase">Send
+							Message</button> </div>
 				</form>
 			</div>
 		</div>

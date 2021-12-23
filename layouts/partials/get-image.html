@@ -8,4 +8,9 @@
 {{ with .Resources.ByType "image" }}
   {{ $image = index . 0 }}
 {{ end }}
+
+{{ with .Resources.Match "feature.*" }}
+  {{ $image = index . 0 }}
+{{ end }}
+
 {{ return $image }}

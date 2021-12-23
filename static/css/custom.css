@@ -1,1 +1,29 @@
 /*! Place your custom styles here */
+
+.cover h1 {
+    font-size: 3.8em;
+    font-weight: 700;
+    text-shadow: 6px 6px 10px #1a1919;
+}
+
+.cover .container {
+    margin-top: -93px;
+}
+
+.cover h2 {
+    text-shadow: 6px 6px 10px #1a1919;
+    font-size: 1.6em;
+}
+
+.pricing .h1 {
+    font-size: 3.7em;
+    font-weight: 400;
+}
+
+
+#recent .project img:hover, article img.featured:hover {
+    opacity: .7;
+}
+#recent .project img, article img.featured {
+    transition: all .5s;
+}
