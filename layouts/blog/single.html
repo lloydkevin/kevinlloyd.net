@@ -35,13 +35,7 @@
 						</div>
 						
 					</div>
-					{{ with .Site.DisqusShortname }}
-					<div>
-						{{ template "_internal/disqus.html" . }}
-					</div>
-					{{ end }}
-
-
+					
 					<!-- <div class="article__share text-center">
 						<a class="btn bg--facebook btn--icon" href="#"> <span class="btn__text">
 					<i class="socicon socicon-facebook"></i>
@@ -57,6 +51,19 @@
 		</div>
 	</div>
 </section>
+
+{{ if  .Site.DisqusShortname }}
+<section class="comments">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-10 col-lg-8">
+				{{ template "_internal/disqus.html" . }}
+			</div>	
+		</div>
+	</div>
+</section>
+
+{{ end }}
 
 <!-- {{ partial "sidebar.html" . }} -->
 {{ end }}
