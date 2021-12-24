@@ -4,6 +4,7 @@ title = 'Kevin Lloyd - Freelance Web Designer/Developer in Dallas/Frisco Texas'
 
 enableRobotsTXT = true
 googleAnalytics = 'UA-100181-12'
+disqusShortname = 'kevin-lloyd' # Enable Disqus comments by entering your Disqus shortname
 
 
 [permalinks]
