@@ -1,16 +1,23 @@
 {{ $image := false }}
-{{ with .Params.images }}
-  {{ $image = resources.Get (index . 0) }}
-{{ end }}
-{{ with .Params.image }}
-  {{ $image = resources.Get . }}
-{{ end }}
+
 {{ with .Resources.ByType "image" }}
   {{ $image = index . 0 }}
 {{ end }}
 
 {{ with .Resources.Match "feature.*" }}
   {{ $image = index . 0 }}
+{{ end }}
+{{ with .Params.images }}
+  {{ $image = resources.Get (index . 0) }}
+{{ end }}
+{{ with .Params.image }}
+  {{ $image = resources.Get . }}
+{{ end }}
+
+{{/*  Force population of images so opengraph.html and twitter_cards.html populate correctly.  */}}
+
+{{ if $image }}
+{{- $image.Permalink -}}
 {{ end }}
 
 {{ return $image }}
