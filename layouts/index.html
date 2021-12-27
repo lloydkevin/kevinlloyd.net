@@ -26,15 +26,22 @@
 			
 		</div>
 		<div class="row">
-			{{- range $projects -}}
+			{{- range first 8 $projects -}}
 			<div class="col-md-3 project">
 				{{ $image := false }}
-				{{ with partial "get-image.html" . }}
-				{{ $image = .Fill "350x233 webp" }}
+				{{ with .Resources.Match "thumb.*" }}
+					{{ $image = index . 0 }}
 				{{ end }}
+				{{ if not $image }}
+					{{ with .Resources.Match "feature.*" }}
+						{{ $image = index . 0 }}
+					{{ end }}
+				{{ end }}
+
+				{{ $image = $image.Fill "350x233 webp" }}
 				
 				<div class="feature">
-					<a href="{{.RelPermalink}}" title="{{ .Title }}">
+					<a href="{{ .RelPermalink }}" title="{{ .Title }}">
 						<img alt="{{.Title}}" src="{{ $image.RelPermalink }}" width="{{$image.Width}}" class="border--round">
 					</a>
 					<h5>
