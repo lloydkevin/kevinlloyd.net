@@ -14,10 +14,4 @@
   {{ $image = resources.Get . }}
 {{ end }}
 
-{{/*  Force population of images so opengraph.html and twitter_cards.html populate correctly.  */}}
-
-{{ if $image }}
-{{- $image.Permalink -}}
-{{ end }}
-
 {{ return $image }}

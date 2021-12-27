@@ -2,6 +2,7 @@
 
 {{ $image := false }}
 {{ with partial "get-image.html" . }}
+  {{ $link := .Permalink  }}  {{/*  Forcing eval of permalink for OpenGraph  */}}
   {{ $image = .Resize "730x webp" }}
 {{ end }}
 
