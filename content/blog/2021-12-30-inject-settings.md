@@ -13,7 +13,7 @@ With those examples, dependencies seem easy to identify: service from another mo
 In .NET Framework, these are stored in the `web.config` file and are accessed with `ConfigurationManager`. In .NET Core, these have moved to (the much more flexible) `appsettings.json` files and are accessed using `IConfiguration`.
 
 ## So What's the Problem?
-It's not so much a problem as much as it is an opportunity for improvement. When testing, it's easy enough to add an `app.config` or `appsettings.json` file specific to the test project. That has worked for me just fine for years. One issue I've run into is the difficulty of changing settings for a specific test. Yes, you could change the settings before the test run and reset it after, but consider this:
+It's not so much a problem as much as it is an opportunity for improvement. When testing, it's easy enough to add an `app.config` or `appsettings.json` file specific to the test project. That has worked for me fine for years. One issue I've run into is the difficulty of changing settings for a specific test. Yes, you could change the settings before the test run and reset it after, but consider this:
 
 ```csharp {linenos=inline}
 public class OrdersController
@@ -34,7 +34,7 @@ public class OrdersController
 }
 ```
 Line 6 is our decision point to decide whether we do a *soft delete* or a *hard delete* of an order.
-Testing this isn't impossible, you could `ConfigurationManager.AppSettings["IsSoftDelete"] = 'True/False'` before the test and rest it after. The casting of the string to a boolean is a bit awkward here. But, for me, it's mainly the possible repetition of the *magic string* `IsSoftDelete`. Both of these things can be error-prone.
+Testing this isn't impossible. You could set `ConfigurationManager.AppSettings["IsSoftDelete"] = 'True/False'` before the test and rest it after. The casting of the string to a boolean is a bit awkward here. But, for me, it's the possible repetition of the *magic string* `IsSoftDelete`. Both of these things can be error-prone.
 
 ## The Alternative
 
