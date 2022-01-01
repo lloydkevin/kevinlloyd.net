@@ -7,12 +7,16 @@
 	<div class="article__title text-center">
 		<a href="{{ .RelPermalink }}">
 			<h2>{{ .Title }}</h2>
-		</a> <span>{{ .Date.Format "January 2, 2006" }} in </span>
-		<span>
+		</a> 
+		<span>{{ .Date.Format "January 2, 2006" }}</span>
+		<span> in
 			{{ range .Params.tags }}
 			<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
 			{{ end }}
-		</span> </div>
+		</span>
+		<br />
+		<span>Read Time: {{ .ReadingTime }} minutes</span>
+	</div>
 	<div class="article__body">
 		
 		{{ if $image }}

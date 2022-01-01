@@ -12,17 +12,25 @@
 			<div class="col-md-10 col-lg-8">
 				<article>
 					<div class="article__title text-center">
-						<h1 class="h2">{{ .Title }}</h1> <span>{{ .Date.Format "January 2, 2006" }} 
+						<h1 class="h2">{{ .Title }}</h1>
+						<span>{{ .Date.Format "January 2, 2006" }}</span>
 							<!-- in </span><span><a href="#">Web Design</a></span>  -->
 						{{ with .Params.tags }}
-							in
+							<span> in
 							
 								{{ range . }}
-								<span><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></span>
+								<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
 								{{ end }}
-							
+							</span>
 						
 						{{ end }}
+
+						{{- "<!--" | safeHTML -}} {{ .WordCount }} words
+						{{- "-->" | safeHTML -}}
+						<!-- <span>{{ .WordCount }} words.</span> -->
+						<br />
+						<span>Read Time: {{ .ReadingTime }} minutes</span>
+						
 					
 					</div>
 					<div class="article__body"> 
