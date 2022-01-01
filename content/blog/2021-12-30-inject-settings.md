@@ -6,9 +6,9 @@ images: [/images/posts/inject-settings.jpg]
 tags: ["Dependency Injection", "Testing"]
 draft: false
 ---
-When talking about the [Dependency Inversion Principle](https://stackify.com/dependency-inversion-principle/), the `D` in [SOLID](https://simple.wikipedia.org/wiki/SOLID_(object-oriented_design)), we have a pretty good idea what dependencies we're trying to abstract away. `OrderRepository` or `SendGridEmailClient` are easy examples of implementations we should abstract away. It also overlaps well with the Single Responsibility Principle, since data access for orders and sending emails are separated from the business logic where they are used. The C# implementation of this would involve making these classes implement the appropriate interfaces, e.g. `IOrderRepository` and `IEmailSender`.
+When talking about the [Dependency Inversion Principle](https://stackify.com/dependency-inversion-principle/), the `D` in [SOLID](https://simple.wikipedia.org/wiki/SOLID_(object-oriented_design)), we have a pretty good idea of what dependencies we're trying to abstract away. `OrderRepository` or `SendGridEmailClient` are easy examples of implementations we should abstract away. It also overlaps well with the Single Responsibility Principle, since data access for orders and sending emails are separated from the business logic where they are used. The C# implementation of this would involve making these classes implement the appropriate interfaces, e.g. `IOrderRepository` and `IEmailSender`.
 
-With those examples, dependencies seem easy to identify: service from another module in your code, data access libraries like repositories, external or 3rd party services like HTTP clients or something sending email. One dependency I hadn't given much thought to is the settings the application relies on.
+With those examples, dependencies seem easy to identify: service from another module in your code, data access libraries like repositories, external or 3rd party services like HTTP clients, or something sending email. One dependency I hadn't given much thought to is the settings the application relies on.
 
 In .NET Framework, these are stored in the `web.config` file and are accessed with `ConfigurationManager`. In .NET Core, these have moved to (the much more flexible) `appsettings.json` files and are accessed using `IConfiguration`.
 
@@ -34,9 +34,9 @@ public class OrdersController
 }
 ```
 Line 6 is our decision point to decide whether we do a *soft delete* or a *hard delete* of an order.
-Testing this isn't impossible, you could `ConfigurationManager.AppSettings["IsSoftDelete"] = 'True/False'` before the test and rest it after. The casting the string to a boolean is a bit awkward here. But, for me, it's mainly the possible repetition of the *magic string* `IsSoftDelete`. Both of these things can be error prone.
+Testing this isn't impossible, you could `ConfigurationManager.AppSettings["IsSoftDelete"] = 'True/False'` before the test and rest it after. The casting of the string to a boolean is a bit awkward here. But, for me, it's mainly the possible repetition of the *magic string* `IsSoftDelete`. Both of these things can be error-prone.
 
-Now the alternative:
+## The Alternative
 
 ```csharp {linenos=inline}
 public class OrdersController
@@ -60,16 +60,16 @@ public class OrdersController
     }
 }
 ```
-Notice we are injecting the `Settings` class in through the constructor. This is a class that could represent the  full structure of the application settings. This is better for a number of reasons.
+Notice we are injecting the `Settings` class in through the constructor. This is a class that could represent the full structure of the application settings. This is better for several reasons.
 
 - A concrete POCO (plain old C# object) is refactoring friendly. You can rename fields and be sure they are consistent everywhere in the application.
 - Compiler assistance against typos. 
-- Intellisense/autocomplete in any decent IDE. This can help with auto discovery of other settings.
+- Intellisense/autocomplete in any decent IDE. This can help with the auto-discovery of other settings.
 - Elimination of *magic strings*
 
 Testing becomes easier and more explicit. We can specifically inject a test instance of the settings class with the values you care about. Because `Settings` is just a POCO, it's trivial to new up and pass to the class you're testing.
 
-Of course, we have to map the do this mapping of the `Settings` class to the file settings, through `ConfigurationManager` somewhere. This would usually be done in some bootstrap code somewhere and registered using your IoC (Inversion of Control) container.
+Of course, we still have to map the `Settings` class to the file settings, through `ConfigurationManager` somewhere. This would usually be done in some bootstrap code somewhere and registered using your IoC (Inversion of Control) container.
 
 ## The Implementation
 
@@ -95,7 +95,7 @@ If you're running a console application or a Windows Service, your registration 
 
 ### .NET Core
 
-The `appSettings.json` file in .NET Core is much more flexible than `AppSettings` in `web.config`. You can have more complex objects, with sub classes, and even collections. The process is similar:
+The `appSettings.json` file in .NET Core is much more flexible than `AppSettings` in `web.config`. You can have more complex objects, with sub-classes, and even collections. The process is similar:
 
 - Define a POCO that maps to your settings file.
 - Map the settings from the file to the class
@@ -129,7 +129,7 @@ public class MyService
 }
 ```
 
-This works great, but I prefer to the one additional step:
+This works great, but I prefer adding one additional step:
 
 ```c#
  services.AddSingleton(x => x.GetService<IOptions<Settings>>().Value);
@@ -149,7 +149,7 @@ public class MyService
 }
 ```
 
-Another alternative to registering is to totally skip the Options Pattern:
+Another alternative to registering is to skip the Options Pattern entirely:
 
 ```c#
 var settings = configuration.Get<Settings>(); // to bind the whole file
@@ -159,7 +159,7 @@ var settings = configuration.GetSection("Settings").Get<Settings>(); // to bind 
 services.AddSingleton(settings); // register this instance.
 ```
 
-I find this a more straight forward implementation, if I don't need the added benefits of `IOptions`.
+I find this a more straightforward implementation if I don't need the added benefits of `IOptions`.
 
 ### Reusability
 
