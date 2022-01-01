@@ -27,3 +27,31 @@
 #recent .project img, article img.featured {
     transition: all .5s;
 }
+
+.article__body ul {
+    list-style: outside;
+    padding-left: 1em;
+}
+
+.article__body ul, .article__body ol {
+    font-size: 1.35714286em;
+    line-height: 1.68421053em;
+}
+
+.article__body li {
+    padding: 0 1em;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.article__body ol li:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.article__body ol {
+    padding-left: 1em;
+}
+
+ol:not([class*="menu"]) li > a {
+    font-weight: normal;
+}
