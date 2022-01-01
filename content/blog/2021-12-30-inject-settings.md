@@ -1,12 +1,10 @@
 ---
-title: "Inject Settings for Easier Testing"
-description: "Using Dependency Injection for Application Settings"
-date: "2021-12-29T08:00:00-06:00"
+title: "Dependency Injection of AppSettings in ASP.NET Core"
+description: "Use Dependency Injection for Application Settings. This can be appSettings.json in ASP.NET Core or web.config settings in .NET Framework 4.X."
+date: "2021-12-30T08:00:00-06:00"
 images: [/images/posts/inject-settings.jpg]
-tags:
-  - "dependency injection"
-  - "testing"
-draft: true
+tags: ["Dependency Injection", "Testing"]
+draft: false
 ---
 When talking about the [Dependency Inversion Principle](https://stackify.com/dependency-inversion-principle/), the `D` in [SOLID](https://simple.wikipedia.org/wiki/SOLID_(object-oriented_design)), we have a pretty good idea what dependencies we're trying to abstract away. `OrderRepository` or `SendGridEmailClient` are easy examples of implementations we should abstract away. It also overlaps well with the Single Responsibility Principle, since data access for orders and sending emails are separated from the business logic where they are used. The C# implementation of this would involve making these classes implement the appropriate interfaces, e.g. `IOrderRepository` and `IEmailSender`.
 
@@ -97,7 +95,7 @@ If you're running a console application or a Windows Service, your registration 
 
 ### .NET Core
 
-The `appsettings.json` file in .NET Core is much more flexible than `AppSettings` in `web.config`. You can have more complexed objects, with sub classes, and even collections. The process is similar:
+The `appSettings.json` file in .NET Core is much more flexible than `AppSettings` in `web.config`. You can have more complex objects, with sub classes, and even collections. The process is similar:
 
 - Define a POCO that maps to your settings file.
 - Map the settings from the file to the class
@@ -161,11 +159,9 @@ var settings = configuration.GetSection("Settings").Get<Settings>(); // to bind 
 services.AddSingleton(settings); // register this instance.
 ```
 
-I find this a more straight forward implementaiton.
+I find this a more straight forward implementation, if I don't need the added benefits of `IOptions`.
 
 ### Reusability
-
-
 
 ```c#
 public static IServiceCollection BindSettings<T>(this IServiceCollection services, IConfiguration configuration, string section = null) where T : class, new()
@@ -186,10 +182,7 @@ public static IServiceCollection BindSettings<T>(this IServiceCollection service
 
 This extension method will allow easy registration of settings.
 
-
-
 ### References
 
 - [Easy Configuration Binding in ASP.NET Core - revisited](https://weblog.west-wind.com/posts/2017/Dec/12/Easy-Configuration-Binding-in-ASPNET-Core-revisited)
-
 - [Options Pattern In .NET – IOptions, IOptionsSnapshot, IOptionsMonitor](https://thecodeblogger.com/2021/04/21/options-pattern-in-net-ioptions-ioptionssnapshot-ioptionsmonitor/)
