@@ -1,0 +1,9 @@
+{
+  "name": "netlify-deps",
+  "version": "0.1.0",
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^4.1.3",
+    "autoprefixer": "9.8.4",
+    "postcss-cli": "^9.1.0"
+  }
+}

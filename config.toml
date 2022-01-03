@@ -36,3 +36,6 @@ quality = 95
   pre = "<i class='fa fa-road'></i>"
   url = '/getting-started/'
   weight = -100
+
+[build]
+  writeStats = true
