@@ -21,6 +21,14 @@ quality = 95
 [params]
   Subtitle = 'Hugo is Absurdly Fast!'
   mainSections = ['blog']
+  css = [
+    "css/stack-interface.css",
+    "css/socicon.css",
+    "css/bootstrap.css",
+    "css/flickity.css",
+    "css/theme-tangerine.css",
+    "css/custom.css",
+  ]
 
 
 [menu]

@@ -13,27 +13,10 @@
 	{{ template "_internal/schema.html" . }}
 	{{ template "_internal/twitter_cards.html" . }}
 
-	{{ with partial "post-process-css.html" "css/stack-interface.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
-	{{ end }}
-	{{ with partial "post-process-css.html" "css/socicon.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
-	{{ end }}
-
-	{{ with partial "post-process-css.html" "css/bootstrap.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
-	{{ end }}
-
-	{{ with partial "post-process-css.html" "css/flickity.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
-	{{ end }}
-
-	{{ with partial "post-process-css.html" "css/theme-tangerine.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
-	{{ end }}
-
-	{{ with partial "post-process-css.html" "css/custom.css" }}
-	<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
+	{{ range .Site.Params.css }}
+		{{ with partial "post-process-css.html" . }}
+		<link href="{{ .RelPermalink }}" rel="stylesheet" type="text/css" media="all">
+		{{end }}
 	{{ end }}
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700" rel="stylesheet">
