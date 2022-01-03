@@ -1,9 +1,6 @@
 const purgecss = require('@fullhuman/postcss-purgecss')({
-    content: [ './hugo_stats.json' ],
-    defaultExtractor: (content) => {
-        let els = JSON.parse(content).htmlElements;
-        return els.tags.concat(els.classes, els.ids);
-    }
+    content: ['./**/*.html', './**/*.js'],
+    //safelist: ['flickity-slider', 'slider', 'slides', 'slide', 'is-selected', 'flickity-prev-next-button', 'flickity-page-dots', 'dot', 'flickity-enabled', 'is-draggable', 'flickity-viewport', 'flickity-slider' ]
 });
 
 module.exports = {
