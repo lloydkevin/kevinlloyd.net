@@ -1,0 +1,6 @@
+{{ $css := resources.Get . }}
+{{ $css = $css | resources.PostCSS }}
+{{ if hugo.IsProduction }}
+{{ $css = $css | fingerprint }}
+{{ end }}
+{{ return $css  }}
