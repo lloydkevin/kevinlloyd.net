@@ -30,6 +30,12 @@ quality = 95
     "css/custom.css",
   ]
 
+  js = [
+    "js/flickity.min.js",
+    "js/parallax.js",
+    "js/scripts.js"
+  ]
+
 
 [menu]
 [[menu.main]]
