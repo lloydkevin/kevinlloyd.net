@@ -17,7 +17,7 @@
 	{{ range .Site.Params.css }}
 		{{ $css = $css | append (resources.Get .) }}
 	{{ end }}
-	{{ $css = $css | resources.Concat "css/bundle.css" | postCSS | fingerprint }}
+	{{ $css = $css | resources.Concat "css/bundle.css" | postCSS | minify | fingerprint }}
 	<link href="{{ $css.RelPermalink }}" rel="stylesheet" type="text/css" media="all">
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700" rel="stylesheet">
