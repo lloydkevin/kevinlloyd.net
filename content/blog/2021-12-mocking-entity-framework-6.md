@@ -11,13 +11,9 @@ tags: [Testing, TDD, Entity Framework]
 First off, let me make a few assumptions if you're reading this article and trying to mock with Entity Framework 6:
 
 1. **You're on a legacy codebase**. If you weren't you'd be using Entity Framework Core and the In-Memory Provider.
-
 2. **You're not utilizing Database Migrations**. If you were, it may probably be easier to create a new database and run tests using `localDb`.
-
 3. **Your schema is extremely large**. With a large database schema (often seen in legacy systems) data setup can become extremely difficult. You want to set up some *simple* data for a test, but you end up 6 tables deep with a web of foreign key requirements.
-
 4. **You're not using the Repository Pattern**. Although I'm not always a fan, it's much easier to mock out an interface you define (usually).
-
 
 ## Disclaimer
 Mocking has become controversial. It can be a testing code smell. If used incorrectly, it can lead to brittle tests, that don't add a lot of value. Ironically, it can sometimes make tests more difficult to write.
