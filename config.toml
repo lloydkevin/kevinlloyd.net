@@ -21,6 +21,20 @@ quality = 95
 [params]
   Subtitle = 'Hugo is Absurdly Fast!'
   mainSections = ['blog']
+  css = [
+    "css/stack-interface.css",
+    "css/socicon.css",
+    "css/bootstrap.css",
+    "css/flickity.css",
+    "css/theme-tangerine.css",
+    "css/custom.css",
+  ]
+
+  js = [
+    "js/flickity.min.js",
+    "js/parallax.js",
+    "js/scripts.js"
+  ]
 
 
 [menu]
@@ -36,3 +50,6 @@ quality = 95
   pre = "<i class='fa fa-road'></i>"
   url = '/getting-started/'
   weight = -100
+
+[build]
+  writeStats = true
