@@ -10,11 +10,11 @@ tags: ["Entity Framework", "Azure", "Micro Post"]
 
 ## The Problem
 
-Imagine one day you wake up to reports from customers saying that their trial accounts have expired too early. How much ealiear? About six (6) hours. First of all, you ask yourself why would they wait till the last few hours of a 30 day trial, but I digress.
+Imagine one day you wake up to reports from customers saying that their trial accounts have expired too early. How much earlier? About six (6) hours. First of all, you ask yourself why would they wait till the last few hours of a 30-day trial, but I digress.
 
 You load up your developer environment and get to work.
 
-## The Set Up
+## The Set-Up
 
 You're using Entity Framework to all the *expired* accounts from your Azure SQL Server database and then deactivate them:
 
@@ -36,11 +36,11 @@ That seems right, so what's the issue here?
 
 ## The Reason
 
-After banging your head against the wall for a few hours you stumble onto this blog post. You also remember having all sorts of timezone issues where you just pushed this applicaiton to Azure. So you check that the timezone on the Azure App Service is configured to run in the Central time zone. It is set correctly; the`WEBSITE_TIME_ZONE` setting is set to `US Central Standard Time`.
+After banging your head against the wall for a few hours you stumble onto this blog post. You also remember having all sorts of timezone issues where you just pushed this application to Azure. So you check that the timezone on the Azure App Service is configured to run in the Central time zone. It is set correctly; the `WEBSITE_TIME_ZONE` setting is set to `US Central Standard Time`.
 
-Then you remember that there is no way to set the timezone on the Azure SQL Instance and all becomes clear. `GETDATE()` will utlize the timezone associated with the SQL Sever location. Since there's no way to set this in Azure SQL, it's not using your expired time of 10:00 AM. Instead, all the expiration dates are using 4:00 PM (6 hours later).
+Then you remember that there is no way to set the timezone on the Azure SQL Instance and all becomes clear. `GETDATE()` will utilize the timezone associated with the SQL Server location. Since there's no way to set this in Azure SQL, it's not using your expired time of 10:00 AM. Instead, all the expiration dates are using 4:00 PM (6 hours later).
 
-What's happening is the SQL Server Database Provider is being very *smart*. It sees a time of `DateTime.Now` and it's *smart enough* to know the equivalent SQL verion is `GETDATE()`. Since `DateTime.Now` is evaluated on the Application Sever (Central Time) and `GETDATE` on the SQL Server (UTC); all sorts of havoc will be in store.
+What's happening is the SQL Server Database Provider is being very *smart*. It sees a time of `DateTime.Now` and it's *smart enough* to know the equivalent SQL version is `GETDATE()`. Since `DateTime.Now` is evaluated on the Application Server (Central Time) and `GETDATE` on the SQL Server (UTC); all sorts of havoc will be in store.
 
 ## The Fix
 
@@ -63,9 +63,9 @@ Now all is right with your query and the appropriate accounts will get disabled.
 
 ### The Better Fix
 
-Use [DateTimeOffset](https://ardalis.com/why-use-datetimeoffset/). If you're using and storing DateTimeOffset in your application, even a SQL comparison using `GETDATE()` or `SYSDATETIME()` will be evaluted correctly since all the timezone information would be baked into the data.
+Use [DateTimeOffset](https://ardalis.com/why-use-datetimeoffset/). If you're using and storing DateTimeOffset in your application, even a SQL comparison using `GETDATE()` or `SYSDATETIME()` will be evaluated correctly since all the timezone information would be baked into the data.
 
-That way it won't matter where your SQL Server or Applicaiton Server are running.
+That way it won't matter where your SQL Server or Application Server are running.
 
 ## References:
 
