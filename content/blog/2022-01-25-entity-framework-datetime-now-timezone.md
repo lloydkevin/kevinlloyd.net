@@ -3,7 +3,7 @@ title: "Entity Framework, Azure SQL, DateTime.Now, and Time Zones"
 date: 2022-01-25T20:35:13-06:00
 draft: false
 
-description: "My Descritpion"
+description: "Take care when using Entity Framework with your (Azure) SQL database in different time zones."
 images: [/images/posts/entity-framework-azure-sql-timezone.jpg]
 tags: ["Entity Framework", "Azure", "Micro Post"]
 ---
@@ -60,6 +60,8 @@ select * from dbo.Accounts where ExpirationDate > '2022-01-25 10:00'
 ```
 
 Now all is right with your query and the appropriate accounts will get disabled.
+
+This problem was made more obvious because Azure SQL databases don't allow you to change the timezone. However, it is not isolated to Azure SQL. This would be an issue anytime your application server is in a different location than your database server (e.g. in a load balanced failover situation).
 
 ### The Better Fix
 
