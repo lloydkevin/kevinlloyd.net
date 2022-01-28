@@ -16,7 +16,7 @@ You load up your developer environment and get to work.
 
 ## The Set-Up
 
-You're using Entity Framework to all the *expired* accounts from your Azure SQL Server database and then deactivate them:
+You're using Entity Framework to get all the *expired* accounts from your Azure SQL Server database so that you can deactivate them (made up scenario, but bear with me):
 
 ```csharp
 var expiredAccounts = _db.Accounts.Where(x => x.ExpirationDate > DateTime.Now).ToList();
