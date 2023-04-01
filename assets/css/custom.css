@@ -33,8 +33,8 @@
     padding-left: 1em;
 }
 
-.article__body ul, .article__body ol {
-    font-size: 1.35714286em;
+.article__body ul, .article__body ol, article .article__body ul {
+    font-size: 1.35714286rem;
     line-height: 1.68421053em;
 }
 
