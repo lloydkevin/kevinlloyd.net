@@ -38,7 +38,7 @@ First off, we shouldn't confuse and asynchronous process with the .NET [`async a
 Let's get the naive implementation out of the way:
 ```csharp {linenos=inline,hl_lines=6}
 [HttpPost("/api/longRunning")]
-public IActionResult()
+public IActionResult Start()
 {
     Task.Run(() => 
     {
@@ -183,82 +183,71 @@ The great thins about `IBackgroundTaskQueue` using `Channel<T>` under the hood, 
 
 On line 35, we're resolving an instance of `IPublisher`, which MediatR uses for publishing notifications. Once a notification is published, any handlers will be automatically resolved by MediatR and they'll run.
 
-As an example:
+In your `Program.cs` we wire these into the service collection as follows:
 
 ```csharp
-// 
-public record MyLongRunningJob(string SomeParam) : INotification;
+builder.Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+builder.Services.AddHostedService<QueuedHostedService>();
+```
+
+An example handler:
+
+```csharp
+public record MyLongRunningJob(Guid JobId) : INotification;
 
 public class MyLongRunningJobHandler : INotificationHandler<Ping>
 {
+    private readonly IStatusService _statusService;
     // Can inject any required dependencies here. They will be scoped to this instance.
     // Note they will not have access to HttpContext since this runs in the background.
-    public MyLongRunningJobHandler() {}
+    public MyLongRunningJobHandler(IStatusService statusService) 
+    {
+        _statusService = statusService;
+    }
 
     public async Task Handle(MyLongRunningJob notification, CancellationToken cancellationToken)
     {
-        // Set process status to "Running"
-        Debug.WriteLine($"My Param: {notification.SomeParam}");
+        _statusService.SetStatus(notification.JobId, "Running");
+        Debug.WriteLine($"Running job: {notification.JobId}");
         await myLongRunningProcessHere();
-        // Update process status to "Done"
+        _statusService.SetStatus(notification.JobId, "Done");
     }
 }
 ```
 
-### 
+Now to refactor your controller method from above:
 
+```csharp {linenos=inline}
+[HttpPost("/api/longRunning")]
+public Task<IActionResult> Start()
+{
+    var jobId = Guid.NewGuid();
+    await _backgroundTaskQueue.QueueTaskAsync(new MyLongRunningJob(jobId));
+    return Ok(jobId);
+}
 
+[HttpGet(/api/longRunning/status/{id:guid})]
+public IActionResult GetStatus(Guid id)
+{
+    var status = _statusService.GetStatus(id);
+    return Ok(status);
+}
+```
 
-## Coding Options
-
-For whatever reason, HangFire doesn't fit.
-
-
-
-## Background queue implementation
-
-To implement an in-process background  queue, you will need to use the Channels library. Channels provides a  way to create and manage queues of messages. You can then use the  MediatR library to send messages to the queue. MediatR is a dependency  injection framework for .NET that provides a way to decouple your code  into separate concerns.
-
-
+And there you have it.
 
 ## Conclusion
+The Asynchronous Request-Reply (ARR) pattern can be challenging to implement without over engineering and over complicating. External, distributed queue mechanisms aren't always needed. An efficient and cost effective solution can be whipped up using very few dependencies. In the project I was working with, we already included MediatR, so it was a win win. Not only can we solve the ARR issue, but we now have a framework for queuing other background tasks:
+- In a system that implements DDD with Domain Events, some domain events can be flagged as asynchronous. These could be queued for background processing, instead of dispatched in the same user request.
+- Background thumbnail generation when an image is uploaded.
+- Triggering background rebuilding of some large cache.
 
-- Conclusion: Using an in-process background queue can provide a number of benefits, including:
-    - Increased performance: By deferring work to be done later, you can  free up the current thread to do other things. This can improve the  performance of your application.
-    - Improved scalability: By using a background queue, you can scale  your application more easily. You can add more workers to the queue to  handle more work.
-    - Improved reliability: By decoupling your code, you can make your  application more reliable. If one part of your application fails, the  other parts of your application can continue to run.
+This solution also lays a great foundation for extension in the future, if your needs change.
+- `IBackgroundTaskQueue` could be extended to persist the tasks when queued. That way, they queue can be recovered from storage in the event of an application failure.
+- `IBackgroundTaskQueue` could even delegate to an actual distributed queue service.
 
+As with all cases of extension, be careful that you're not reinventing the wheel. If the problem set changes drastically, it might be time to reevaluate from the start.
 
+Now I'd be doing a disservice if I didn't mention [Hangfire](https://www.hangfire.io/) as option here. However, for my needs, it was a bit of overkill. But it's also a decent candidate for assisting with AAR.
 
-
-
-
-
-III. MediatR for Message Processing
-
-- Introduce MediatR, a library for implementing Mediator pattern in C#
-- Explain how MediatR can be used for message processing in the background
-- Demonstrate how to use MediatR to process messages from a channel
-
-IV. Building the Background Queue
-
-- Explain how to combine channels and MediatR to build an in-process background queue
-- Provide a step-by-step guide for building the queue, including creating a channel, registering MediatR handlers, and processing messages in the background
-
-V. Conclusion
-
-- Summarize the key points covered in the post
-- Highlight the benefits of using an in-process background queue in modern applications
-- Encourage readers to try building their own in-process background queue using Channels and MediatR
-
-
-
-
-
-
-
-GPT intro
-
-In modern applications, it's increasingly common to perform time-consuming or resource-intensive tasks in the background, without blocking the main thread or user interface. One popular approach to background processing is the Asynchronous Request-Reply pattern, which allows an application to send a request to a background process, receive a response, and continue executing other tasks in the meantime.
-
-In this blog post, we'll demonstrate how to build an in-process background queue using Channels and MediatR in C#, specifically to solve the problem of implementing the Asynchronous Request-Reply pattern. We'll walk you through the process of creating a channel for background processing, using MediatR to handle messages, and ultimately building a robust background queue that can handle multiple requests and responses simultaneously. Whether you're working on a web application, desktop application, or other type of software, mastering the art of background processing is an essential skill for any developer. So, let's dive in!
+Do let me know if you have found other interesting uses for an in-process queue.
