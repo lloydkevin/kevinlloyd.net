@@ -11,7 +11,7 @@ tags: ["", "Micro Post"]
 
 ## What is the Asynchronous Request-Reply Pattern
 
-Over the years I've often had a need for this pattern, I just didn't know it had a name. Often times, we'd like to kick off long running process from the user interface to your backend server. The problem is that HTTP isn't great at handling long running processes. Case in point, the default timeout on the `HttpClient` class is 100 seconds.
+Over the years I've often needed this pattern, I just didn't know it had a name. Oftentimes, we'd like to kick off long running process from the user interface to your backend server. The problem is that HTTP isn't great at handling long-running processes. Case in point, the default timeout on the `HttpClient` class is 100 seconds.
 
 What I've typically done is simply extend the timeout to something ridiculous to ensure that my process won't timeout. It works, but not a great solution. In modern applications, it's increasingly common to perform time-consuming or resource-intensive tasks in the background, without blocking the main thread or user interface.
 
@@ -21,19 +21,19 @@ Enter the Asynchronous Request-Reply pattern:
 
 The [Microsoft Article](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply) explains this with all the specific details. But in a nutshell:
 
-- The client kicks off the the long running process.
-- The server kicks of the process *asynchronously* (fire and forget) and immediately returns to the the client
-    - That "*asychronously*" is doing a lot of heavy lifting in that statement.
-    - Most likely a process or job identifier is returned. Or possibly the location of anonther endpoint to poll for status.
+- The client kicks off the long-running process.
+- The server kicks off the process *asynchronously* (fire and forget) and immediately returns to the client
+    - That "*asynchronously*" is doing a lot of heavy lifting in that statement.
+    - Most likely a process or job identifier is returned. Or possibly the location of another endpoint to poll for status.
 - The client will then poll the *status* endpoint periodically.
-    - I've even seen some fancy implementaiton where the status message includes an estimated completion time.
+    - I've even seen some fancy implementations where the status message includes an estimated completion time.
 - When the status endpoint responds with *completed*. The client can then take the appropriate action.
     - Just display *ok* to the user or go to the destination of the *thing* it was waiting for.
     - Again, some implementations handle this with HTTP 302 redirects.
 
 ## How Do I Implement It?
 
-First off, we shouldn't confuse and asynchronous process with the .NET [`async await`](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios) concept.
+First off, we shouldn't confuse an asynchronous process with the .NET [`async await`](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios) concept.
 
 Let's get the naive implementation out of the way:
 ```csharp {linenos=inline,hl_lines=6}
@@ -48,34 +48,34 @@ public IActionResult Start()
 }
 ```
 I'm sure, at some point, we've all tried something like this and got burned. But just in case you haven't here's the problem:
-`Task.Run()` will run your process asynchronously (kinda), however as soon as the controller returns a response ASP.NET will dispose that instance of the controller. If your long running process relies on anything instantiated during that controller again, things will start to fail in spectacular fashion. The errors may look like this: `Error: the object is already disposed`.
+`Task.Run()` will run your process asynchronously (kinda), however, as soon as the controller returns a response ASP.NET will dispose that instance of the controller. If your long-running process relies on anything instantiated during that controller again, things will start to fail spectacularly. The errors may look like this: `Error: the object is already disposed`.
 
-What we need is a dedicated process that runs this outside of the scope of the controller. That typically leads us to a background process backed by a queue. The term _queue_ have a lot of different meanings here. Some great examples are: [RabbitMQ](https://www.rabbitmq.com/), [AWS SQS](https://aws.amazon.com/sqs/), [Azure Storage Queues](https://azure.microsoft.com/en-us/products/storage/queues/), and [Azure Service Bus](https://azure.microsoft.com/en-us/products/service-bus/).
+What we need is a dedicated process that runs this outside of the scope of the controller. That typically leads us to a background process backed by a queue. The term _queue_ has a lot of different meanings here. Some great examples are: [RabbitMQ](https://www.rabbitmq.com/), [AWS SQS](https://aws.amazon.com/sqs/), [Azure Storage Queues](https://azure.microsoft.com/en-us/products/storage/queues/), and [Azure Service Bus](https://azure.microsoft.com/en-us/products/service-bus/).
 
-Any of these will fit the scope of the problem, however they come with their own pros and cons.
+Any of these will fit the scope of the problem, however, they come with their pros and cons.
 
-- They are great for scalability of your application. It's often trivial to have these scale horizontally to handle more load. Plus the cloud options can be configured.
+- They are great for the scalability of your application. It's often trivial to have these scale horizontally to handle more load. Plus the cloud options can be configured.
 - They are an excellent option for communication between different systems or services.
 - They are reliable and durable. Once your message makes it into the queue, you're pretty much guaranteed it will get delivered (at least once). Even if your services fail or were offline. Once things are back up and running, messages will be consumed.
-- Most of them have built in retry capabilities, if you need it.
+- Most of them have built-in retry capabilities, if you need it.
 
 However:
-- There is a cost to consider. If you're using something on premises there's labor cost to keep this service up and running. For cloud services, that's something you can lookup. However, those costs can be fuzzy, since they tend to grow with your usage.
-- The biggest con is usually one of complexity. Things to consider include: networking, security, message routing, etc.
+- There is a cost to consider. If you're using something on-premises there's labor cost to keep this service up and running. For cloud services, that's something you can look up. However, those costs can be fuzzy, since they tend to grow with your usage.
+- The biggest con is usually one of complexity. Things to consider include networking, security, message routing, etc.
 
 Even though these systems _can_ solve our problem, they don't seem very targeted for it.
 Caveat:
 I will say, if you're maintaining a system that already uses a queue service and there is an established usage pattern for it, I would definitely lean on that to solve this problem.
 
 
-## In Process Queue Service
+## In-Process Queue Service
  
- If we don't want to bite off the added complexity of an infrastructure based queue service, we're left with an in-process queue. This is by no means a silver bullet, but it does fit the Asynchronous Request-Reply Pattern pretty well.
+ If we don't want to bite off the added complexity of an infrastructure-based queue service, we're left with an in-process queue. This is by no means a silver bullet, but it does fit the Asynchronous Request-Reply Pattern pretty well.
 
 Conceptually, the implementation would look like this:
 - A in-memory _queue_ (the data structure [definition](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)))
-  - This store handle a FIFO list of _tasks_ or _jobs_.
-- A background process that listens for entries into the queue, pops them off, and runs the job.
+  - This store handles a FIFO list of _tasks_ or _jobs_.
+- A background process that listens for entries into the queue, pops them off and runs the job.
 
 C# has queues (of course). We will actually be using `Channels`, which wrap our queue in a much cleaner and more performant abstraction. You can [read more about channels here](https://devblogs.microsoft.com/dotnet/an-introduction-to-system-threading-channels/).
 
@@ -83,7 +83,7 @@ ASP.NET Core gives us a wonderful implementation for Background Services, using 
 
 It just so happens the Microsoft documentation has a great example that combines both of these elements to build a [Queue Service](https://learn.microsoft.com/en-us/dotnet/core/extensions/queue-service#create-queuing-services).
 
-The problem with this example is that it lacked some real world problems. Since task queue was only storing a list of `Func` it seemed you could only perform trivial tasks. It did not account for resolving other dependencies or performing _real_ tasks.
+The problem with this example is that it lacked some real-world problems. Since the task queue was only storing a list of `Func` it seemed you could only perform trivial tasks. It did not account for resolving other dependencies or performing _real_ tasks.
 
 When trying to solve this problem for myself, I poked at it for a while, until I realized what I really needed was a way to _dispatch_ these tasks.
 
@@ -92,7 +92,7 @@ If you're unfamiliar with the [MediatR](https://github.com/jbogard/MediatR) libr
 
 I often use this library as a way to dispatch Domain Events in a lot of my projects. So I leveraged them for this problem. Here's what the modified implementation looks like:
 
-First we have a `BackgroundTaskQueue`:
+First, we have a `BackgroundTaskQueue`:
 ```csharp
 public interface IBackgroundTaskQueue
 {
@@ -179,7 +179,7 @@ public sealed class QueuedHostedService : BackgroundService
     }
 }
 ```
-The great thins about `IBackgroundTaskQueue` using `Channel<T>` under the hood, is that the call the `DequeueTask` on line 32, simple `awaits` until there is something put in the queue. We are not doing long pooling, there's no `Thread.Sleep()` or `await Task.Delay(...)` anywhere here. The instant something is added to the queue, the background service wakes up and starts processing.
+The great thing about `IBackgroundTaskQueue` using `Channel<T>` under the hood, is that the call the `DequeueTask` on line 32, simply `awaits` until there is something put in the queue. We are not doing long pooling, there's no `Thread.Sleep()` or `await Task.Delay(...)` anywhere here. The instant something is added to the queue, the background service wakes up and starts processing.
 
 On line 35, we're resolving an instance of `IPublisher`, which MediatR uses for publishing notifications. Once a notification is published, any handlers will be automatically resolved by MediatR and they'll run.
 
@@ -237,17 +237,17 @@ public IActionResult GetStatus(Guid id)
 And there you have it.
 
 ## Conclusion
-The Asynchronous Request-Reply (ARR) pattern can be challenging to implement without over engineering and over complicating. External, distributed queue mechanisms aren't always needed. An efficient and cost effective solution can be whipped up using very few dependencies. In the project I was working with, we already included MediatR, so it was a win win. Not only can we solve the ARR issue, but we now have a framework for queuing other background tasks:
+The Asynchronous Request-Reply (ARR) pattern can be challenging to implement without over-engineering and over-complicating. External, distributed queue mechanisms aren't always needed. An efficient and cost-effective solution can be whipped up using very few dependencies. In the project I was working on, we already included MediatR, so it was a win-win. Not only can we solve the ARR issue, but we now have a framework for queuing other background tasks:
 - In a system that implements DDD with Domain Events, some domain events can be flagged as asynchronous. These could be queued for background processing, instead of dispatched in the same user request.
 - Background thumbnail generation when an image is uploaded.
 - Triggering background rebuilding of some large cache.
 
 This solution also lays a great foundation for extension in the future, if your needs change.
-- `IBackgroundTaskQueue` could be extended to persist the tasks when queued. That way, they queue can be recovered from storage in the event of an application failure.
+- `IBackgroundTaskQueue` could be extended to persist the tasks when queued. That way, the queue can be recovered from storage in the event of an application failure.
 - `IBackgroundTaskQueue` could even delegate to an actual distributed queue service.
 
 As with all cases of extension, be careful that you're not reinventing the wheel. If the problem set changes drastically, it might be time to reevaluate from the start.
 
-Now I'd be doing a disservice if I didn't mention [Hangfire](https://www.hangfire.io/) as option here. However, for my needs, it was a bit of overkill. But it's also a decent candidate for assisting with AAR.
+Now I'd be doing a disservice if I didn't mention [Hangfire](https://www.hangfire.io/) as an option here. However, for my needs, it was a bit overkill. But it's also a decent candidate for assisting with AAR.
 
 Do let me know if you have found other interesting uses for an in-process queue.
