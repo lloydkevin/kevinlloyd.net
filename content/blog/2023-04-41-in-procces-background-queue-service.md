@@ -68,12 +68,142 @@ Caveat:
 I will say, if you're maintaining a system that already uses a queue service and there is an established usage pattern for it, I would definitely lean on that to solve this problem.
 
 
-## In Process Queue
+## In Process Queue Service
  
- If we don't want to bite off the added complexity of a queue service, we're left with an in-process queue. This is by no means a silver bullet, but it does fit the Asynchronous Request-Reply Pattern pretty well.
+ If we don't want to bite off the added complexity of an infrastructure based queue service, we're left with an in-process queue. This is by no means a silver bullet, but it does fit the Asynchronous Request-Reply Pattern pretty well.
 
+Conceptually, the implementation would look like this:
+- A in-memory _queue_ (the data structure [definition](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)))
+  - This store handle a FIFO list of _tasks_ or _jobs_.
+- A background process that listens for entries into the queue, pops them off, and runs the job.
 
+C# has queues (of course). We will actually be using `Channels`, which wrap our queue in a much cleaner and more performant abstraction. You can [read more about channels here](https://devblogs.microsoft.com/dotnet/an-introduction-to-system-threading-channels/).
 
+ASP.NET Core gives us a wonderful implementation for Background Services, using ... well [BackgroundService](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-7.0&tabs=visual-studio#backgroundservice-base-class).
+
+It just so happens the Microsoft documentation has a great example that combines both of these elements to build a [Queue Service](https://learn.microsoft.com/en-us/dotnet/core/extensions/queue-service#create-queuing-services).
+
+The problem with this example is that it lacked some real world problems. Since task queue was only storing a list of `Func` it seemed you could only perform trivial tasks. It did not account for resolving other dependencies or performing _real_ tasks.
+
+When trying to solve this problem for myself, I poked at it for a while, until I realized what I really needed was a way to _dispatch_ these tasks.
+
+### Enter MediatR
+If you're unfamiliar with the [MediatR](https://github.com/jbogard/MediatR) library, here's a good [usage example](https://ardalis.com/using-mediatr-in-aspnet-core-apps/). I won't be able to do it justice in this post.
+
+I often use this library as a way to dispatch Domain Events in a lot of my projects. So I leveraged them for this problem. Here's what the modified implementation looks like:
+
+First we have a `BackgroundTaskQueue`:
+```csharp
+public interface IBackgroundTaskQueue
+{
+    Task<INotification> DequeueAsync(CancellationToken stoppingToken);
+    Task QueueTaskAsync(INotification task, CancellationToken stoppingToken = default);
+}
+
+public class BackgroundTaskQueue : IBackgroundTaskQueue
+{
+    private readonly Channel<INotification> _queue = Channel.CreateUnbounded<INotification>();
+
+    public async Task QueueTaskAsync(INotification task, CancellationToken stoppingToken = default)
+    {
+        await _queue.Writer.WriteAsync(task);
+    }
+
+    public async Task<INotification> DequeueAsync(CancellationToken stoppingToken)
+    {
+        return await _queue.Reader.ReadAsync(stoppingToken);
+    }
+}
+```
+This class allows our consumers to add tasks to the queue. These _tasks_ are simply instances of `INotification` from MediatR.
+Most of this is taken straight from the Microsoft Example.
+
+Then we implement the actual background service:
+
+```csharp {linenos=inline,hl_lines=[32,35,38]}
+/// <summary>
+/// https://learn.microsoft.com/en-us/dotnet/core/extensions/queue-service
+/// Using MediatR to dispatch tasks
+/// </summary>
+public sealed class QueuedHostedService : BackgroundService
+{
+    private readonly IBackgroundTaskQueue _queue;
+    private readonly ILogger<QueuedHostedService> _logger;
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    public QueuedHostedService(ILogger<QueuedHostedService> logger,
+        IServiceScopeFactory scopeFactory, IBackgroundTaskQueue queue)
+    {
+        _logger = logger;
+        _scopeFactory = scopeFactory;
+        _queue = queue;
+    }
+
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation($"{nameof(QueuedHostedService)} is running.");
+        return ProcessTaskQueueAsync(stoppingToken);
+    }
+
+    private async Task ProcessTaskQueueAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            try
+            {
+                _logger.LogInformation("Waiting for new queue message.");
+                var backgroundTask = await _queue.DequeueAsync(stoppingToken);
+
+                using var scope = _scopeFactory.CreateScope();
+                var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+
+                _logger.LogInformation("Running task {TaskType}", backgroundTask.GetType());
+                await publisher.Publish(backgroundTask, stoppingToken);
+                _logger.LogInformation("Completed task {TaskType}", backgroundTask.GetType());
+            }
+            catch (OperationCanceledException)
+            {
+                // Prevent throwing if stoppingToken was signaled
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred executing task work item.");
+            }
+        }
+    }
+
+    public override async Task StopAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation($"{nameof(QueuedHostedService)} is stopping.");
+        await base.StopAsync(stoppingToken);
+    }
+}
+```
+The great thins about `IBackgroundTaskQueue` using `Channel<T>` under the hood, is that the call the `DequeueTask` on line 32, simple `awaits` until there is something put in the queue. We are not doing long pooling, there's no `Thread.Sleep()` or `await Task.Delay(...)` anywhere here. The instant something is added to the queue, the background service wakes up and starts processing.
+
+On line 35, we're resolving an instance of `IPublisher`, which MediatR uses for publishing notifications. Once a notification is published, any handlers will be automatically resolved by MediatR and they'll run.
+
+As an example:
+
+```csharp
+// 
+public record MyLongRunningJob(string SomeParam) : INotification;
+
+public class MyLongRunningJobHandler : INotificationHandler<Ping>
+{
+    // Can inject any required dependencies here. They will be scoped to this instance.
+    // Note they will not have access to HttpContext since this runs in the background.
+    public MyLongRunningJobHandler() {}
+
+    public async Task Handle(MyLongRunningJob notification, CancellationToken cancellationToken)
+    {
+        // Set process status to "Running"
+        Debug.WriteLine($"My Param: {notification.SomeParam}");
+        await myLongRunningProcessHere();
+        // Update process status to "Done"
+    }
+}
+```
 
 ### 
 
