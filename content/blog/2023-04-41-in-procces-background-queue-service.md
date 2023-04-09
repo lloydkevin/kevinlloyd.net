@@ -5,8 +5,8 @@ draft: false
 
 description: "Streamline your C# app's workflow with an in-memory queue using Channels and MediatR. Learn how to handle the Asynchronous Request-Reply pattern efficiently."
 
-images: [/images/posts/2023-04-41-in-proces-background-queue-service.jpg]
-tags: ["", "Micro Post"]
+images: [/images/posts/in-memory-query-mediatr.jpg]
+tags: ["MediatR", "Domain Driven Design", "Architecture"]
 ---
 
 ## What is the Asynchronous Request-Reply Pattern
