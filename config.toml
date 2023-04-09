@@ -14,6 +14,11 @@ disqusShortname = 'kevin-lloyd' # Enable Disqus comments by entering your Disqus
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+  [markup.Highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = false
             
 [imaging]
 quality = 95
