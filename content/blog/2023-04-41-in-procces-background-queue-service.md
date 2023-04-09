@@ -13,7 +13,7 @@ tags: ["", "Micro Post"]
 
 Over the years I've often needed this pattern, I just didn't know it had a name. Oftentimes, we'd like to kick off long running process from the user interface to your backend server. The problem is that HTTP isn't great at handling long-running processes. Case in point, the default timeout on the `HttpClient` class is 100 seconds.
 
-What I've typically done is simply extend the timeout to something ridiculous to ensure that my process won't timeout. It works, but not a great solution. In modern applications, it's increasingly common to perform time-consuming or resource-intensive tasks in the background, without blocking the main thread or user interface.
+What I've typically done is simply extend the timeout to something ridiculous to ensure that my process won't time out. It works, but not a great solution. In modern applications, it's increasingly common to perform time-consuming or resource-intensive tasks in the background, without blocking the main thread or user interface.
 
 Enter the Asynchronous Request-Reply pattern. The [Microsoft Article](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply) explains this with all the specific details. But in a nutshell:
 
