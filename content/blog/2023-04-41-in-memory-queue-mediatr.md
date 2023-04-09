@@ -2,6 +2,8 @@
 title: "Efficiently Handling Asynchronous Request-Reply with an In-Memory Queue and MediatR in C#"
 date: 2023-04-01T14:44:15-05:00
 draft: false
+slug: "in-memory-queue-with-mediatr"
+
 
 description: "Streamline your C# app's workflow with an in-memory queue using Channels and MediatR. Learn how to handle the Asynchronous Request-Reply pattern efficiently."
 

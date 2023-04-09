@@ -8,7 +8,7 @@ disqusShortname = 'kevin-lloyd' # Enable Disqus comments by entering your Disqus
 
 
 [permalinks]
-  blog = "/:title/"
+  blog = "/:slug/"
 
 [markup]
   [markup.goldmark]
