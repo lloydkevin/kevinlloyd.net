@@ -25,6 +25,7 @@ Enter the Asynchronous Request-Reply pattern. The [Microsoft Article](https://le
     - I've even seen some fancy implementations where the status message includes an estimated completion time.
 - When the status endpoint responds with *completed*, the client can then take the appropriate action.
     - Just display *ok* to the user or go to the destination of the *thing* it was waiting for.
+    - Some APIs may respond with the destination of the new resource via the `Location` header.
 
 ## How Do I Implement It?
 
@@ -41,7 +42,9 @@ public IActionResult Start()
 }
 ```
 I'm sure, at some point, we've all tried something like this and got burned. But just in case you haven't here's the problem:
-`Task.Run()` will run your process asynchronously (kinda), however, as soon as the controller returns a response ASP.NET will dispose that instance of the controller. If your long-running process relies on anything instantiated during that controller again, things will start to fail spectacularly. The errors may look like this: `Error: the object is already disposed`.
+`Task.Run()` will run your process asynchronously (kinda), however, as soon as the controller returns a response ASP.NET will dispose that instance of the controller. If your long-running process relies on anything instantiated during that controller action, things will start to fail spectacularly. The errors may look like this: `Error: the object is already disposed`.
+
+Consider the example where data needs to be fetched using Entity Framework (EF) Core. In a web application, EF Core is  usually wired up to the DI container using a `scoped` lifetime. That way, the EF instance (along with the controller instance) is disposed after the HTTP request is completed. If a process is still relying on that instance, bad things happen.
 
 What we need is a dedicated process that runs this outside of the scope of the controller. That typically leads us to a background process backed by a queue. The term _queue_ has a lot of different meanings here. Some great examples are: [RabbitMQ](https://www.rabbitmq.com/), [AWS SQS](https://aws.amazon.com/sqs/), [Azure Storage Queues](https://azure.microsoft.com/en-us/products/storage/queues/), and [Azure Service Bus](https://azure.microsoft.com/en-us/products/service-bus/).
 
@@ -76,14 +79,14 @@ ASP.NET Core gives us a wonderful implementation for Background Services, using 
 
 It just so happens the Microsoft documentation has a great example that combines both of these elements to build a [Queue Service](https://learn.microsoft.com/en-us/dotnet/core/extensions/queue-service#create-queuing-services).
 
-The problem with this example is that it lacked some real-world problems. Since the task queue was only storing a list of `Func` it seemed you could only perform trivial tasks. It did not account for resolving other dependencies or performing _real_ tasks.
+The problem with this example is that it lacks some real-world problems. Since the task queue is only storing a list of `Func` it seems you could only perform trivial tasks. It does not account for resolving other dependencies or performing _real_ tasks.
 
 When trying to solve this problem for myself, I poked at it for a while, until I realized what I really needed was a way to _dispatch_ these tasks.
 
 ### Enter MediatR
 If you're unfamiliar with the [MediatR](https://github.com/jbogard/MediatR) library, here's a good [usage example](https://ardalis.com/using-mediatr-in-aspnet-core-apps/). I won't be able to do it justice in this post.
 
-I often use this library as a way to dispatch Domain Events in a lot of my projects. So I leveraged them for this problem. Here's what the modified implementation looks like:
+I often use this library as a way to dispatch [Domain Events](https://www.martinfowler.com/eaaDev/DomainEvent.html) in a lot of my projects. So I leveraged them for this problem. Here's what the modified implementation looks like:
 
 First, we have a `BackgroundTaskQueue`:
 ```csharp
@@ -231,7 +234,7 @@ And there you have it.
 
 ## Conclusion
 The Asynchronous Request-Reply (ARR) pattern can be challenging to implement without over-engineering and over-complicating. External, distributed queue mechanisms aren't always needed. An efficient and cost-effective solution can be whipped up using very few dependencies. In the project I was working on, we already included MediatR, so it was a win-win. Not only can we solve the ARR issue, but we now have a framework for queuing other background tasks:
-- In a system that implements DDD with Domain Events, some domain events can be flagged as asynchronous. These could be queued for background processing, instead of dispatched in the same user request.
+- In a system that implements DDD with Domain Events, some domain event handlers could queue their own background tasks. One example would be to a domain event handlers for updates to `Product`. This could queue a task to generate a materialized view for use in the read model or projection for `Product`. It could be a denormalized version called `ProductSummary` that includes, `NumberOfReviews`, `AverageReviewRating`, `NumberOfPurchases`, etc.
 - Background thumbnail generation when an image is uploaded.
 - Triggering background rebuilding of some large cache.
 
