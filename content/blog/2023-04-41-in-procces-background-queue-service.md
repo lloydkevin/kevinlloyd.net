@@ -15,21 +15,16 @@ Over the years I've often needed this pattern, I just didn't know it had a name.
 
 What I've typically done is simply extend the timeout to something ridiculous to ensure that my process won't timeout. It works, but not a great solution. In modern applications, it's increasingly common to perform time-consuming or resource-intensive tasks in the background, without blocking the main thread or user interface.
 
-Enter the Asynchronous Request-Reply pattern:
-
- [![Asynchronous Request-Reply Pattern - From Microsoft Learning](/images/posts/async-request.png)](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply)
-
-The [Microsoft Article](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply) explains this with all the specific details. But in a nutshell:
+Enter the Asynchronous Request-Reply pattern. The [Microsoft Article](https://learn.microsoft.com/en-us/azure/architecture/patterns/async-request-reply) explains this with all the specific details. But in a nutshell:
 
 - The client kicks off the long-running process.
 - The server kicks off the process *asynchronously* (fire and forget) and immediately returns to the client
     - That "*asynchronously*" is doing a lot of heavy lifting in that statement.
-    - Most likely a process or job identifier is returned. Or possibly the location of another endpoint to poll for status.
+    - Most likely a process or job identifier is returned to the client. Or possibly the location of another endpoint to poll for status.
 - The client will then poll the *status* endpoint periodically.
     - I've even seen some fancy implementations where the status message includes an estimated completion time.
-- When the status endpoint responds with *completed*. The client can then take the appropriate action.
+- When the status endpoint responds with *completed*, the client can then take the appropriate action.
     - Just display *ok* to the user or go to the destination of the *thing* it was waiting for.
-    - Again, some implementations handle this with HTTP 302 redirects.
 
 ## How Do I Implement It?
 
