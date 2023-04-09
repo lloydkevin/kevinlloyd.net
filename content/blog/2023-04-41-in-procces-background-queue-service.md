@@ -33,8 +33,6 @@ The [Microsoft Article](https://learn.microsoft.com/en-us/azure/architecture/pat
 
 ## How Do I Implement It?
 
-First off, we shouldn't confuse an asynchronous process with the .NET [`async await`](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios) concept.
-
 Let's get the naive implementation out of the way:
 ```csharp {linenos=inline,hl_lines=6}
 [HttpPost("/api/longRunning")]
